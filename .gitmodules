@@ -1,0 +1,3 @@
+[submodule "raw/front_source"]
+	path = raw/front_source
+	url = git@github.com:Leopohf/2026-album-track-front.git
