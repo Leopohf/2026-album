@@ -28,3 +28,9 @@ Chronological, append-only record of all operations.
 ## [2026-05-07] - Policy: English Documentation Mandate
 - Updated all `AGENTS.md` files (root, backend, frontend) to require all documentation in the Obsidian vault to be in English.
 - Translated `README.md`, `wiki/features.md`, and `wiki/back-architecture.md` to English.
+
+## [2026-05-07] - Infrastructure: Backend Submodule
+- Converted `raw/back_source` from a local directory to a Git Submodule.
+- Linked to `git@github.com:Leopohf/2026-album-track-back.git`.
+- Restored `AGENTS.md` to the new submodule directory.
+- Translated and updated `raw/INDEX.md` to English.

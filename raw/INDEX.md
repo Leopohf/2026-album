@@ -1,15 +1,15 @@
 # Raw Sources Index
 
-Esta carpeta contiene los repositorios de código fuente originales para el proyecto.
+This folder contains the original source code repositories for the project.
 
-## Proyectos Vinculados
-- **[Front-end Source](front_source/)**: Submódulo de Git (Angular 21). Vinculado vía SSH.
-- **[Back-end Source](back_source/)**: Directorio local (Go). Actualmente en desarrollo inicial sin repositorio remoto.
+## Linked Projects
+- **[Front-end Source](front_source/)**: Git Submodule (Angular 21). Linked via SSH.
+- **[Back-end Source](back_source/)**: Git Submodule (Go). Linked via SSH.
 
-## Instrucciones de Uso
-Estos directorios permiten al agente acceder al código fuente original para su análisis y síntesis en la `wiki/`. Según el patrón LLM Wiki, el contenido de estas rutas debe tratarse como **solo lectura** desde la perspectiva de la base de conocimiento de la Wiki, aunque son áreas de trabajo activas para el desarrollo.
+## Usage Instructions
+These directories allow the agent to access the original source code for analysis and synthesis into the `wiki/`. Following the LLM Wiki pattern, the content of these paths should be treated as **read-only** from the perspective of the Wiki's knowledge base, although they are active working areas for development.
 
-Para clonar este proyecto con todas sus dependencias:
+To clone this project with all its dependencies:
 ```bash
-git clone --recursive [URL-DEL-REPO]
+git clone --recursive [REPO-URL]
 ```
