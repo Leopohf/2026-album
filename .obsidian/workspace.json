@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "bd5d8a4c7be298a8",
+        "id": "3d495a8088702878",
         "type": "tabs",
         "children": [
           {
-            "id": "b2c3eb3e81ba6f93",
+            "id": "86db06ffcf0b10d0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/back-architecture.md",
+                "file": "wiki/features.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "back-architecture"
+              "title": "features"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "wiki/back-architecture.md",
+                "file": "AGENTS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for back-architecture"
+              "title": "Backlinks for AGENTS"
             }
           },
           {
@@ -183,9 +183,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "b2c3eb3e81ba6f93",
+  "active": "86db06ffcf0b10d0",
   "lastOpenFiles": [
     "AGENTS.md",
+    "wiki/features.md",
+    "raw/front_source/AGENTS.md",
     "wiki/back-architecture.md",
     "raw/INDEX.md",
     "wiki/front-overview.md",

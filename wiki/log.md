@@ -20,3 +20,7 @@ Chronological, append-only record of all operations.
 - Initialized `../back/AGENTS.md` with instructions for a Senior Go/AWS Developer.
 - Created `wiki/back-architecture.md` with the initial technical proposal.
 - Updated `wiki/index.md` with the new backend documentation link.
+
+## [2026-05-07] - Documentation: Features Status
+- Created `wiki/features.md` to track implemented and planned features.
+- Updated `wiki/index.md` to link to the new features section.
