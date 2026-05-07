@@ -43,6 +43,6 @@ The primary agent acts as a Senior Software Engineer responsible for:
   - Contradictions between pages.
 
 ## Conventions
-- **Language**: Spanish (as per user preference in initial interaction) and English (for technical documentation).
+- **Language**: English (MANDATORY for all documentation within the Obsidian vault, including `wiki/` and `README.md`). Spanish is only allowed for direct communication with the user if they initiate it.
 - **Naming**: Descriptive, kebab-case for filenames.
 - **Updates**: Incremental and atomic.

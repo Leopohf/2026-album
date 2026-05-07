@@ -24,3 +24,7 @@ Chronological, append-only record of all operations.
 ## [2026-05-07] - Documentation: Features Status
 - Created `wiki/features.md` to track implemented and planned features.
 - Updated `wiki/index.md` to link to the new features section.
+
+## [2026-05-07] - Policy: English Documentation Mandate
+- Updated all `AGENTS.md` files (root, backend, frontend) to require all documentation in the Obsidian vault to be in English.
+- Translated `README.md`, `wiki/features.md`, and `wiki/back-architecture.md` to English.

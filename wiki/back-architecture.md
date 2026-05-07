@@ -1,16 +1,16 @@
 # Backend Architecture
 
-*Nota: Esta página se encuentra en fase inicial de diseño.*
+*Note: This page is in the initial design phase.*
 
-## Propuesta Tecnológica
-- **Lenguaje**: Go (Golang)
-- **Base de Datos**: PostgreSQL (Relacional)
+## Technology Proposal
+- **Language**: Go (Golang)
+- **Database**: PostgreSQL (Relational)
 - **Cloud**: AWS (Lambda/API Gateway)
 
-## Componentes Principales
-1. **API Gateway**: Punto de entrada para el frontend.
-2. **Lambda Functions**: Lógica de negocio serverless.
-3. **RDS/PostgreSQL**: Almacenamiento persistente de usuarios y colecciones.
+## Main Components
+1. **API Gateway**: Entry point for the frontend.
+2. **Lambda Functions**: Serverless business logic.
+3. **RDS/PostgreSQL**: Persistent storage for users and collections.
 
-## Integración con el Sistema
-El backend proporcionará los endpoints necesarios para que el frontend de Angular sincronice los álbumes de los usuarios, permitiendo que la persistencia vaya más allá del `localStorage`.
+## System Integration
+The backend will provide the necessary endpoints for the Angular frontend to synchronize user albums, allowing persistence to go beyond `localStorage`.
