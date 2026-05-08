@@ -70,8 +70,21 @@ Chronological, append-only record of all operations.
 - Angular templates are deprecated for new UI development.
 - Updated `AGENTS.md` and `wiki/react-integration.md` to reflect this mandatory requirement.
 
+## [2026-05-08] - Data: Image Renaming
+- Renamed 48 images in `raw/images/` to match their corresponding countries.
+- Mapping was derived from the official Panini FIFA World Cup 2026 album order and validated against `extracted_stickers.json`.
+- Intro and special section images were preserved with their original names as per project policy.
+- Established a clean naming convention (`country-name.heic`) for easier management of raw assets.
+
 ## [2026-05-08] - UI: Full Migration to React Complete
 - Completed the migration of all remaining components (`FilterBar`, `StatsPanel`, `UserHeader`, `StickerGrid`) to React.
 - Every UI component in `src/app/components/` is now a React functional component.
 - Angular hosts remain as the bridge to the service layer and Signals.
 - Verified system stability with a successful production build using `pnpm`.
+
+## [2026-05-08] - Data: Automated Extraction System
+- Created a data extraction utility in `@raw/info-extraction-script/` using Node.js and Gemini Vision API to process physical album images.
+- Implemented `extract-stickers.js` with automated schema-based extraction matching the `Sticker` model.
+- Documented the extraction process and setup in `wiki/data-extraction.md`.
+- Updated `raw/INDEX.md` to include the new utility project.
+
