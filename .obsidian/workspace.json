@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/log.md",
+                "file": "wiki/features/core.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "log"
+              "title": "core"
             }
           }
         ]
@@ -185,21 +185,31 @@
   },
   "active": "86db06ffcf0b10d0",
   "lastOpenFiles": [
-    "wiki/album-logic.md",
+    "wiki/features/future.md",
+    "wiki/features/status.md",
+    "wiki/features/core.md",
+    "wiki/features",
     "wiki/features.md",
+    "wiki/album-logic.md",
+    "wiki/log.md",
+    "raw/front_source/dist/front/browser/styles-2OPTGXCC.css",
+    "raw/front_source/dist/front/server/chunk-YYZGGNTD.mjs",
+    "raw/front_source/dist/front/server/chunk-OP5CI4DU.mjs",
+    "raw/front_source/dist/front/server/chunk-FPRRCFOU.mjs",
+    "raw/front_source/dist/front/server/chunk-4N62ABTZ.mjs",
+    "raw/front_source/dist/front/browser/chunk-LK2NFKQH.js",
+    "raw/front_source/dist/front/browser/chunk-Y5OTRRSB.js",
+    "raw/front_source/dist/front/browser/chunk-LACWHK4D.js",
+    "raw/front_source/dist/front/browser/chunk-43QIOEAN.js",
+    "wiki/index.md",
     "raw/back_source/AGENTS.md",
-    "raw/back_source",
     "AGENTS.md",
     "raw/front_source/AGENTS.md",
     "wiki/back-architecture.md",
     "raw/INDEX.md",
     "wiki/front-overview.md",
-    "wiki/index.md",
-    "wiki/log.md",
     "README.md",
     "wiki/front-architecture.md",
-    "wiki",
-    "raw",
     "TEST.md",
     "PROJECT_OVERVIEW.md",
     "PROJECT_ARCHITECTURE.md",

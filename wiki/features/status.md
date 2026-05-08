@@ -1,6 +1,6 @@
-# Feature Status
+# Feature Implementation Status
 
-Tracking implemented features and their current status.
+Current status of the project's milestones.
 
 ## Infrastructure and Documentation
 - [x] **LLM Wiki Structure**: Implementation of the Karpathy pattern for knowledge management.
@@ -8,14 +8,17 @@ Tracking implemented features and their current status.
 - [x] **Operations Record**: Implementation of `log.md` for traceability.
 
 ## Frontend (Angular)
-- [/] **Initial Boilerplate**: Angular 21 app with Signals and SSR configured.
-- [ ] **Album Management**: Interface to visualize collections.
-- [ ] **Sticker Marking**: Logic for marking missing and repeated stickers.
+- [x] **Initial Boilerplate**: Angular 21 app with Signals and SSR configured.
+- [x] **Album Management**: Interface to visualize collections.
+- [x] **Sticker Marking**: Logic for marking missing and repeated stickers.
+- [x] **Filtering System**: Advanced search and category filtering.
+- [x] **Import/Export**: JSON-based backup system.
 
 ## Backend (Go)
 - [/] **Architecture Design**: Initial Go/AWS proposal defined in `wiki/back-architecture.md`.
 - [ ] **Synchronization API**: Endpoints for data persistence.
-- [ ] **Authentication**: User management.
+- [ ] **Authentication**: Secure user management and cloud sessions.
+- [ ] **Global Stats**: Aggregated data from all users.
 
 ---
 **Legend:**

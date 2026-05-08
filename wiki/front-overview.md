@@ -18,7 +18,7 @@ The front-end of **2026-album-track** is a modern web application built with Ang
 - `src/app/pipes/`: Custom pipes for data transformation.
 
 ## Key Features
-- **Sticker Tracking**: Toggle "tengo" (owned) status and manage "repetidas" (duplicates).
+- **Sticker Tracking**: Toggle status with clear labels (Missing, Owned, Duplicate) and manage duplicates.
 - **Filtering**: Search by name, ID, or number, and filter by status (all, owned, missing, duplicates) or section.
 - **Statistics**: Real-time progress tracking, total count, and duplicates count.
 - **Data Persistence**: Uses `localStorage` to save user progress locally.

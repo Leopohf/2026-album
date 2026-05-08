@@ -2,6 +2,12 @@
 
 Chronological, append-only record of all operations.
 
+## [2026-05-07] - Documentation: Knowledge Base Refinement
+- Restructured `wiki/features/` directory for better organization.
+- Created `wiki/features/core.md`, `wiki/features/status.md`, and `wiki/features/future.md`.
+- Updated `AGENTS.md` (front and back) to include the absolute path of the Obsidian vault and new documentation mandates.
+- Updated `wiki/index.md` to reflect the new documentation structure.
+
 ## [2026-05-07] - Project Initialization
 - Initialized `AGENTS.md` following the Karpathy LLM Wiki pattern.
 - Created `raw/` and `wiki/` directory structure.
@@ -41,3 +47,9 @@ Chronological, append-only record of all operations.
 - Linked to `git@github.com:Leopohf/2026-album-track-back.git`.
 - Restored `AGENTS.md` to the new submodule directory.
 - Translated and updated `raw/INDEX.md` to English.
+
+## [2026-05-08] - UI: Sticker Card Refactoring
+- Refactored `StickerCardComponent` UI to improve clarity.
+- Replaced "Marcar/Quitar" labels with status-based labels: "Faltante" (Missing), "Adquirida" (Owned), and "Repetida" (Duplicate).
+- Updated the action button to have a full border (`border-ink`) and consistent padding.
+- Preserved the original minimalist typography and hover effects.
