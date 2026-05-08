@@ -11,10 +11,14 @@
             "id": "86db06ffcf0b10d0",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "wiki/log.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "log"
             }
           }
         ]
@@ -181,6 +185,7 @@
   },
   "active": "86db06ffcf0b10d0",
   "lastOpenFiles": [
+    "wiki/album-logic.md",
     "wiki/features.md",
     "raw/back_source/AGENTS.md",
     "raw/back_source",
