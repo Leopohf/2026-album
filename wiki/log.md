@@ -53,3 +53,25 @@ Chronological, append-only record of all operations.
 - Replaced "Marcar/Quitar" labels with status-based labels: "Faltante" (Missing), "Adquirida" (Owned), and "Repetida" (Duplicate).
 - Updated the action button to have a full border (`border-ink`) and consistent padding.
 - Preserved the original minimalist typography and hover effects.
+
+## [2026-05-08] - Architecture: React Integration in Angular
+- Defined a strategy to allow UI components to be built with React while keeping Angular as the primary framework.
+- Chosen architecture: Generic Angular Wrapper with "Pure Props" state management.
+- Documented the integration plan in `wiki/react-integration.md`.
+- Planned the migration of `StickerCardComponent` as the first React-based UI component.
+
+## [2026-05-08] - Project Policy: Mandatory pnpm Usage
+- Established `pnpm` as the exclusive package manager for the project.
+- Updated `AGENTS.md` with the new convention.
+- Verified that `README.md` already follows this standard.
+
+## [2026-05-08] - Project Policy: Mandatory React for New UI
+- Established that all new UI components MUST be implemented using React.
+- Angular templates are deprecated for new UI development.
+- Updated `AGENTS.md` and `wiki/react-integration.md` to reflect this mandatory requirement.
+
+## [2026-05-08] - UI: Full Migration to React Complete
+- Completed the migration of all remaining components (`FilterBar`, `StatsPanel`, `UserHeader`, `StickerGrid`) to React.
+- Every UI component in `src/app/components/` is now a React functional component.
+- Angular hosts remain as the bridge to the service layer and Signals.
+- Verified system stability with a successful production build using `pnpm`.
