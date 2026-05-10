@@ -104,3 +104,29 @@ Chronological, append-only record of all operations.
 - Ensured the Coca-Cola section always appears at the end of the album regardless of alphabetical sorting.
 - Updated `wiki/album-logic.md` with new sticker counts and ID conventions (`CC1-14`).
 
+## [2026-05-10] - Policy: Project Conventions
+- Created root `GEMINI.md` to establish foundational project standards.
+- Mandated English for all code elements, documentation, and UI labels.
+- Confirmed `pnpm` as the exclusive package manager and Vanilla CSS for styling.
+
+## [2026-05-10] - Architecture: Testing Strategy
+- Defined a comprehensive testing strategy for the Angular + React hybrid architecture.
+- Selected **Vitest** as the primary testing framework for its speed and compatibility.
+- Documented implementation phases in `wiki/testing-strategy.md`.
+
+## [2026-05-10] - UI: Accent-Insensitive Search
+- Implemented `normalizeString` utility in `AlbumService` to strip diacritics and normalize casing.
+- Updated filtering logic to allow searching for players like "Martínez" using "martinez".
+- Improved search responsiveness and accuracy across the entire sticker dataset.
+
+## [2026-05-10] - Data: Content Completion & Verification
+- Added all non-team stickers (Stadiums, Intro, Museum) to the master dataset.
+- Verified and cleaned up player names for all 48 teams, removing placeholders.
+- Updated `wiki/album-logic.md` with the final sticker count (994) and ID conventions.
+
+## [2026-05-10] - Infrastructure: Documentation Consolidation
+- Merged all `AGENTS.md` content into the root `GEMINI.md` to centralize project conventions.
+- Renamed subdirectory `AGENTS.md` files to `GEMINI.md` for better integration with Gemini CLI.
+- Updated root `GEMINI.md` to include references to scoped instructions for Frontend and Backend.
+- Removed all legacy `AGENTS.md` files.
+

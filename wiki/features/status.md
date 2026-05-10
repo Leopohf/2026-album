@@ -11,8 +11,10 @@ Current status of the project's milestones.
 - [x] **Initial Boilerplate**: Angular 21 app with Signals and SSR configured.
 - [x] **Album Management**: Interface to visualize collections.
 - [x] **Sticker Marking**: Logic for marking missing and repeated stickers.
-- [x] **Filtering System**: Advanced search and category filtering.
+- [x] **Hierarchical Navigation**: Two-level grouping and collapsible UI.
+- [x] **Filtering System**: Advanced search with accent-insensitivity.
 - [x] **Import/Export**: JSON-based backup system.
+- [/] **Testing Suite**: Strategy defined; initial tests for core components.
 
 ## Backend (Go)
 - [/] **Architecture Design**: Initial Go/AWS proposal defined in `wiki/back-architecture.md`.

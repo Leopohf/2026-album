@@ -15,19 +15,26 @@ Detailed description of the features currently implemented in the Panini World C
 
 ## 3. Advanced Filtering & Search
 - **Text Search**: Search by name, ID, or sticker number.
+- **Accent-Insensitive**: Ignore diacritics (e.g., searching "jordan" finds "Jordán") for improved accessibility.
 - **Category Filter**: Filter by specific sections (Teams, Stadiums, Intro).
 - **Status Filter**: Quickly view only owned, missing, or duplicate stickers.
 
-## 4. Real-time Progress Tracking
+## 4. Hierarchical Navigation & Collapsible UI
+- **Two-Level Grouping**: Stickers are organized by Tournament Groups (A-L) and then by Teams/Sections.
+- **Independent Collapse**: Ability to collapse entire groups or individual teams to focus on specific sections.
+- **Bulk Controls**: Expand/Collapse all groups or sections with a single click in the Filter Bar.
+- **Smooth Transitions**: Animated transitions for expanding and collapsing sections using CSS grid techniques.
+
+## 5. Real-time Progress Tracking
 - **Dynamic Stats**: Immediate updates to total owned, missing, and duplicate counts.
 - **Progress Bar**: Visual indicator of completion percentage.
 - **Section Progress**: Track progress within individual sections of the album.
 
-## 5. Data Management (Import/Export)
+## 6. Data Management (Import/Export)
 - **JSON Export**: Generate a JSON string of the current album state for backup or sharing.
 - **JSON Import**: Restore album progress from a previously exported JSON string.
 
-## 6. Minimalist Design (UX/UI)
+## 7. Minimalist Design (UX/UI)
 - **Aesthetic**: High-contrast "ink-on-paper" feel using a monochrome palette.
 - **Typography**: Exclusive use of IBM Plex Mono for a technical, ledger-like appearance.
 - **Responsiveness**: Fully optimized for mobile, tablet, and desktop views.
