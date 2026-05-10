@@ -12,23 +12,25 @@ The album is organized into the following sections:
 | **Intro / Hosts** | `FWC 1-8` | 8 | Pages 1-3. Host cities and stadium emblems. |
 | **Teams (Groups A-L)** | `[TEAM] 1-20` | 960 | 48 teams, 20 stickers each. |
 | **FIFA Museum** | `FWC 9-19` | 11 | History section at the end. |
-| **Coca-Cola Extras** | `CC01-16` | 16 | Final two pages (Sponsored). |
+| **Coca-Cola Extras** | `CC1-14` | 14 | Final two pages (Sponsored). |
 
-**Total Stickers: 996**
+**Total Stickers: 994**
 
 ### Sticker Types
 - **Regular**: Standard player stickers.
-- **Special (Shiny)**: 
+- **Special (Shiny)**:
   - Sticker `00`.
   - Sticker `13` of every team (usually the team badge/shield).
   - Selected `FWC` stickers.
+  - All **Coca-Cola** stickers (`CC1-14`).
 
 ## Data Implementation (Frontend)
 
 ### ID Convention
 To ensure consistency across the stack, stickers use a normalized ID format:
-- **Teams**: `[PREFIX]_[NUMBER]` (e.g., `MEX_13`).
-- **Special Sections**: `FWC_[NUMBER]` or `CC_[NUMBER]` (e.g., `CC_01`).
+- **Teams**: `[PREFIX]-01` (e.g., `MEX-01`).
+- **Special Sections**: `FWC-[NUMBER]` or `CC[NUMBER]` (e.g., `CC1`).
+
 - **Display Label**: For the UI, numbers are padded (e.g., `CC01`) or space-separated (`MEX 13`) to match the physical album.
 
 ### State Management
@@ -38,4 +40,4 @@ Implemented in `AlbumService` using **Angular Signals**:
 - **Derived State**: `stats` signal computes total progress, missing count, and percentages in real-time.
 
 ### JSON Reference
-The master definition is located at `src/app/data/album.data.ts`.
+The master definition is located at `src/app/data/stickers.data.ts`.

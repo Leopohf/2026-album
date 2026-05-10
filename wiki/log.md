@@ -88,3 +88,19 @@ Chronological, append-only record of all operations.
 - Documented the extraction process and setup in `wiki/data-extraction.md`.
 - Updated `raw/INDEX.md` to include the new utility project.
 
+## [2026-05-09] - UI: Hierarchical Grouping & Collapsible UI
+- Introduced a two-level hierarchy: Tournament Groups (A-L) containing Teams (Sections).
+- Implemented independent collapse states for both Groups and Teams in `AlbumService`.
+- Added granular bulk controls (Expand/Collapse Groups vs Expand/Collapse All) in the `FilterBar`.
+- Developed a smooth height-based transition for the collapsible UI using CSS grid.
+- Optimized the layout with sticky group headers and left-aligned toggle controls.
+- Documented the feature in `wiki/features/hierarchy-collapse.md`.
+
+## [2026-05-09] - Data: Coca-Cola Alliance Stickers
+- Integrated 14 special stickers from the Coca-Cola sponsored section.
+- Extracted player names from physical album images using Gemini Vision.
+- Implemented `coca-cola.data.ts` and integrated it into the master dataset.
+- Optimized the `StickerGridReact` UI to hide redundant sub-headers for single-section groups.
+- Ensured the Coca-Cola section always appears at the end of the album regardless of alphabetical sorting.
+- Updated `wiki/album-logic.md` with new sticker counts and ID conventions (`CC1-14`).
+

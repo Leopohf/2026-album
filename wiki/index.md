@@ -8,5 +8,6 @@ Catalog of all synthesized knowledge in this project.
   - [Roadmap](features/future.md) - Future developments and planned features.
 - [Album Logic](album-logic.md) - Data structure, sticker counts, and technical conventions.
 - [Frontend Overview](front-overview.md) - Summary of the Angular front-end project.
+- [Testing Strategy](testing-strategy.md) - Comprehensive coverage for Angular + React hybrid.
 - [Frontend Architecture](front-architecture.md) - Deep dive into routing, state, and services.
 - [Backend Architecture](back-architecture.md) - Design and infrastructure of the Go/AWS server.

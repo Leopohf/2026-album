@@ -19,7 +19,9 @@ The front-end of **2026-album-track** is a modern web application built with Ang
 
 ## Key Features
 - **Sticker Tracking**: Toggle status with clear labels (Missing, Owned, Duplicate) and manage duplicates.
-- **Filtering**: Search by name, ID, or number, and filter by status (all, owned, missing, duplicates) or section.
+- **Hierarchical Navigation**: Album is organized by Tournament Groups and Teams for easier browsing.
+- **Collapsible UI**: Independently collapse Groups or Teams to focus on specific sections of the album.
+- **Advanced Filtering**: Search by name, ID, or number, and filter by status (all, owned, missing, duplicates) or section.
 - **Statistics**: Real-time progress tracking, total count, and duplicates count.
 - **Data Persistence**: Uses `localStorage` to save user progress locally.
 - **Import/Export**: Capability to import and export album data via JSON.

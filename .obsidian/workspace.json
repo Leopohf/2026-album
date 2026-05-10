@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/features/core.md",
+                "file": "raw/INDEX.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "core"
+              "title": "INDEX"
             }
           }
         ]
@@ -185,9 +185,10 @@
   },
   "active": "86db06ffcf0b10d0",
   "lastOpenFiles": [
+    "wiki/testing-strategy.md",
+    "wiki/features/core.md",
     "wiki/features/future.md",
     "wiki/features/status.md",
-    "wiki/features/core.md",
     "wiki/features",
     "wiki/features.md",
     "wiki/album-logic.md",
