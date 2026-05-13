@@ -150,11 +150,33 @@ Chronological, append-only record of all operations.
   - The resulting image is stateless, allowing it to scale horizontally on any container orchestrator.
   - Included extensive inline documentation in the `Dockerfile` to explain the deployment logic.
 
-## [2026-05-12] - Infrastructure: Angular Static Site Generation (SSG)
-- **Task**: Provide a minimized deployment option using only Angular native tools.
-- **Action**: Enabled `"prerender": { "discoverRoutes": true }` in `angular.json`.
+## [2026-05-12] - Infrastructure: Unified Makefile Interface
+- **Task**: Simplify deployment and development with a single command interface.
+- **Action**: 
+  - Created `raw/front_source/Makefile` with targets for `dev`, `prod-ssr`, `prod-ssg`, and management utilities.
+  - Standardized production commands to use background mode (`--detach`) and automated builds.
+  - Documented the new command interface in `wiki/front-architecture.md`.
 - **Rationale**: 
-  - SSG (Prerendering) converts dynamic routes into static HTML files at build time.
-  - Eliminates the need for a Node.js server (SSR) during runtime.
-  - Allows hosting on purely static infrastructure (S3, GitHub Pages, Netlify), resulting in the smallest possible deployment size and maximum portability.
+  - Reduces the cognitive load of remembering complex Docker Compose flags.
+  - Provides a single entry point for all deployment and development workflows.
+
+## [2026-05-12] - Infrastructure: Deployment Folder Consolidation
+- **Task**: Consolidate all Docker and Nginx configurations into a single folder structure.
+- **Action**: 
+  - Created `raw/front_source/deploy/` with `ssr/` and `ssg/` subdirectories.
+  - Moved Dockerfiles and Nginx configs into their respective rendering strategy folders.
+  - Updated `docker-compose.ssr.yml` and `docker-compose.ssg.yml` with correct context and file paths.
+  - Updated `wiki/front-architecture.md` to reflect the new file locations.
+- **Rationale**: 
+  - Organizes deployment artifacts cleanly, separating them from the application source code.
+  - Simplifies management of environment-specific configurations.
+
+## [2026-05-12] - Infrastructure: Docker Portability Fix
+- **Task**: Resolve "mounts denied" errors in Docker Desktop/WSL environments.
+- **Action**: 
+  - Replaced host volume mounts for Nginx load balancers with dedicated `Dockerfile.lb` images.
+  - Updated `docker-compose.ssr.yml` and `docker-compose.ssg.yml` to build the load balancer images instead of mounting local files.
+- **Rationale**: 
+  - Avoids dependencies on host-specific "File Sharing" settings.
+  - Makes the deployment self-contained and more portable across different operating systems.
 
