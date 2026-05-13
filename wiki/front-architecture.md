@@ -28,3 +28,21 @@ Defined in `src/app/models/sticker.model.ts`:
 - `UserAlbum`: Structure for saved user data.
 - `AlbumStats`: Aggregated statistics (total, owned, missing, progress %).
 - `FilterState`: Defines current search and filter criteria.
+
+## Deployment
+The project supports multiple deployment strategies depending on scale and infrastructure requirements.
+
+### Option 1: Docker Containerization (SSR)
+The application is containerized using Docker for scalable and portable deployment with full Server-Side Rendering support.
+- **Strategy**: Multi-stage Docker build.
+  - **Stage 1 (Builder)**: Uses `node:22-alpine` and `pnpm` to compile the Angular SSR application.
+  - **Stage 2 (Runner)**: Uses a minimal `node:22-alpine` runtime to serve the compiled artifacts.
+- **Scalability**: The container is stateless and environment-agnostic, suitable for horizontal scaling on platforms like Kubernetes or AWS ECS.
+- **Minimization**: The final image contains only the production artifacts (`dist/`) and the Node.js runtime, ensuring a small footprint and faster deployment.
+
+### Option 2: Static Site Generation (SSG / Prerendering)
+For the absolute minimum footprint and maximum simplicity, the project supports full prerendering.
+- **Strategy**: Enabled via `"prerender": true` in `angular.json`.
+- **Outcome**: Running `pnpm build` generates static HTML files for all discovered routes in `dist/front/browser`.
+- **Deployment**: No server required. Simply host the contents of the `browser` folder on any static file server or CDN.
+- **Benefits**: Fastest possible initial load time and zero server-side maintenance or cost.

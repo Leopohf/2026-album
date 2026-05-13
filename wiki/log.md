@@ -96,6 +96,12 @@ Chronological, append-only record of all operations.
 - Optimized the layout with sticky group headers and left-aligned toggle controls.
 - Documented the feature in `wiki/features/hierarchy-collapse.md`.
 
+## [2026-05-10] - Infrastructure: Test Environment Fixes
+- Resolved JSX/TSX transformation failures in Vitest by adding `@vitejs/plugin-react`.
+- Fixed Angular test environment initialization in `src/test-setup.ts` by explicitly calling `TestBed.initTestEnvironment`.
+- Updated `package.json` test script to use `vitest run` for consistent execution.
+- Re-enabled and verified 51 tests across 17 suites (both React and Angular).
+
 ## [2026-05-09] - Data: Coca-Cola Alliance Stickers
 - Integrated 14 special stickers from the Coca-Cola sponsored section.
 - Extracted player names from physical album images using Gemini Vision.
@@ -124,9 +130,31 @@ Chronological, append-only record of all operations.
 - Verified and cleaned up player names for all 48 teams, removing placeholders.
 - Updated `wiki/album-logic.md` with the final sticker count (994) and ID conventions.
 
+## [2026-05-10] - UI: Sticker ID Search & Placeholder Update
+- [FIX] Search bug: added sticker ID to search filter in `AlbumService`.
+- [UI] Updated search placeholder to "SEARCH BY ID, NAME OR NUMBER..." in `FilterBarReact`.
+- [TEST] Added test case for ID search in `album.service.spec.ts`.
+
 ## [2026-05-10] - Infrastructure: Documentation Consolidation
 - Merged all `AGENTS.md` content into the root `GEMINI.md` to centralize project conventions.
 - Renamed subdirectory `AGENTS.md` files to `GEMINI.md` for better integration with Gemini CLI.
 - Updated root `GEMINI.md` to include references to scoped instructions for Frontend and Backend.
 - Removed all legacy `AGENTS.md` files.
+
+## [2026-05-10] - Infrastructure: Scalable Docker Containerization
+- **Task**: Implement bundling, minimization, and horizontal scalability for deployment.
+- **Action**: Created a multi-stage `Dockerfile` and `.dockerignore` for the Angular SSR frontend.
+- **Rationale**: 
+  - Multi-stage builds significantly reduce the final image size by discarding build tools and source code.
+  - Using `node:22-alpine` ensures a minimal footprint and reduced security surface.
+  - The resulting image is stateless, allowing it to scale horizontally on any container orchestrator.
+  - Included extensive inline documentation in the `Dockerfile` to explain the deployment logic.
+
+## [2026-05-12] - Infrastructure: Angular Static Site Generation (SSG)
+- **Task**: Provide a minimized deployment option using only Angular native tools.
+- **Action**: Enabled `"prerender": { "discoverRoutes": true }` in `angular.json`.
+- **Rationale**: 
+  - SSG (Prerendering) converts dynamic routes into static HTML files at build time.
+  - Eliminates the need for a Node.js server (SSR) during runtime.
+  - Allows hosting on purely static infrastructure (S3, GitHub Pages, Netlify), resulting in the smallest possible deployment size and maximum portability.
 

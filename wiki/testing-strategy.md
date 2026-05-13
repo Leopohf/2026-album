@@ -15,20 +15,21 @@ The project already includes `vitest` and `jsdom`. Since it's a hybrid Angular +
 
 ## Implementation Phases
 
-### Phase 1: Test Environment & Tooling Setup
-1. **Install Testing Libraries**: 
-   - `@testing-library/react` and `@testing-library/user-event` for React testing.
-2. **Configure Vitest**: Ensure `vitest.config.ts` (if needed) supports hybrid compilation.
-3. **Update Scripts**: Ensure `pnpm test` triggers Vitest effectively.
+### Phase 1: Test Environment & Tooling Setup (Completed)
+1. **Testing Libraries Installed**: 
+   - `@testing-library/react`, `@testing-library/user-event`, and `@testing-library/jest-dom`.
+2. **Vitest Configuration Optimized**:
+   - `vitest.config.ts` includes `@vitejs/plugin-react` for JSX support.
+   - `src/test-setup.ts` initializes the Angular testing environment via `TestBed.initTestEnvironment`.
+3. **Scripts Updated**:
+   - `pnpm test` is configured to run `vitest run` for reliable CI/CD verification.
 
-### Phase 2: Component Tests (Isolated & Integration)
-- **React Isolated Tests (`[name]React.spec.tsx`)**: Render using `@testing-library/react`, verify rendering and simulate interactions.
-- **Angular Integration Tests (`[name].component.spec.ts`)**: Verify `@Input` to React prop mapping and React event to `@Output` emission.
-- **`ReactWrapperComponent`**: Test mounting, unmounting, and updating.
+### Phase 2: Component Tests (Completed)
+- **React Isolated Tests (`[name]React.spec.tsx`)**: Verified rendering and callbacks for all components (`FilterBar`, `StatsPanel`, `StickerCard`, `StickerGrid`, `UserHeader`).
+- **Angular Integration Tests (`[name].component.spec.ts`)**: Verified the `ReactWrapperComponent` bridge for all components.
 
-### Phase 3: Page (View) Tests (Deep Integration)
-- Deep integration tests for `home`, `album`, `section`, and `profile` pages.
-- Verify data loading and complex state interactions.
+### Phase 3: Page (View) Tests (Completed)
+- Deep integration tests for `home`, `album`, `section`, and `profile` pages are implemented and passing.
 
-### Phase 4: Route Tests
-- Verify navigation for all routes, including parameters and wildcards.
+### Phase 4: Route Tests (Completed)
+- Navigation logic for all primary routes and redirects verified.
