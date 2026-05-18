@@ -17,8 +17,8 @@ Following the **LLM Wiki** pattern, this repository is organized into three laye
 This knowledge repository integrates source code from projects in the `raw/` folder.
 
 ### Sources (raw/)
-- **[Frontend](raw/front_source/)**: Angular 21 application (Git Submodule).
-- **[Backend](raw/back_source/)**: Go server (Git Submodule).
+- **[Frontend](https://github.com/Leopohf/2026-album-track-front)**: Angular 21 application (Git Submodule).
+- **[Backend](https://github.com/Leopohf/2026-album-track-back)**: Go server (Git Submodule).
 
 ### Frontend (Angular)
 The frontend is a high-performance web application built with:
