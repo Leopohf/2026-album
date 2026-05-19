@@ -62,3 +62,7 @@ The primary agent acts as a Senior Software Engineer responsible for:
 ### File Naming & Updates
 - **Naming**: Descriptive, kebab-case for filenames.
 - **Updates**: Incremental and atomic.
+
+### Cost Management
+- **Cost Warning**: If any feature, library, service, or tool proposed for the project incurs a cost (one-time or subscription), you MUST warn the user before proceeding.
+- **Decision-Making**: Provide the user with the option to either search for a free alternative or proceed with the paid option.
