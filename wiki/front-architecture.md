@@ -112,3 +112,34 @@ Kubernetes resources (`deploy/k8s/ssr/` and `deploy/k8s/ssg/`) enforce productio
 - **Network Policies**: Strictly restricts incoming traffic to the application pods, allowing connections only from the Ingress controller.
 - **Horizontal Pod Autoscaling (HPA)**: Scales replicas dynamically between `3` and `10` based on CPU and Memory utilization thresholds to absorb traffic spikes.
 - **Pod Disruption Budgets (PDB)**: Enforces `minAvailable: 2` to guarantee high availability during cluster upgrades or nodes draining.
+
+## Linter & Code Quality (ESLint Flat Config)
+
+To maintain code health across a complex hybrid Angular + React environment without bloating the frontend codebase, a decoupled linter architecture has been established.
+
+### 1. Parallel Linter Package (`raw/album-eslint`)
+Instead of bloating the `raw/front_source` dependencies, all linting tools, engines, and rulesets are defined in a parallel Node project located at `raw/album-eslint`. This ensures:
+- **Zero Bloat**: The primary frontend project remains lightweight and focused strictly on the application source.
+- **Easy Maintenance**: Rule modifications or package upgrades for TypeScript, Angular, or React linting occur in a single dedicated configuration directory.
+
+### 2. Hybrid Flat Config Rules (`raw/album-eslint/index.js`)
+The configuration is written using ESLint v9+ **Flat Config**, targeting distinct file patterns for isolated validation:
+- **Base TS/JS Rules**: Standard rules targeting code quality, strict typing compliance, and forbidding unused symbols across all `.js`, `.ts`, and `.tsx` files.
+- **Angular-Specific Rules (`**/*.ts`)**: Evaluates Angular directives and components selectors, Signal inputs/outputs, and lifecycle hooks using `@angular-eslint/eslint-plugin`.
+- **Angular Template Rules (`**/*.html`)**: Scans templates for correct syntax and template accessibility patterns using `@angular-eslint/template-parser`.
+- **React UI Rules (`**/*.tsx`)**: Validates hook rules and component functional purity using `eslint-plugin-react` and `eslint-plugin-react-hooks`.
+- **Prettier Integration**: Runs `eslint-config-prettier` at the end to automatically disable any formatting rules that might conflict with the existing `.prettierrc`.
+
+### 3. Connection and Execution
+- The package is linked in `raw/front_source/package.json` using the local pnpm linking mechanism:
+  ```json
+  "eslint-config-album": "link:../album-eslint"
+  ```
+- A simple wrapper file `raw/front_source/eslint.config.js` imports and default-exports the shared config:
+  ```javascript
+  import albumConfig from 'eslint-config-album';
+  export default albumConfig;
+  ```
+- Scripts are exposed in `raw/front_source/package.json` to run validation on demand:
+  - `pnpm run lint`: Runs ESLint over all directories inside the frontend scope.
+  - `pnpm run lint:fix`: Automatically applies safe autofixes.

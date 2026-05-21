@@ -11,3 +11,4 @@ Catalog of all synthesized knowledge in this project.
 - [Testing Strategy](testing-strategy.md) - Comprehensive coverage for Angular + React hybrid.
 - [Frontend Architecture](front-architecture.md) - Deep dive into routing, state, and services.
 - [Backend Architecture](back-architecture.md) - Design and infrastructure of the Go/AWS server.
+- [Linter Specifications](linter.md) - Decoupled hybrid Angular + React linting rule configurations.

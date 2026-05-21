@@ -203,5 +203,13 @@ Chronological, append-only record of all operations.
   - **Docker Hardening**: Configured non-root execution (`nginxinc/nginx-unprivileged:alpine` for SSG and Node `node` user for SSR). Installed `tini` as PID 1 inside the SSR container to resolve zombie process leaks and allow prompt shutdown signals. Configured container healthchecks.
   - **Kubernetes Hardening**: Embedded `securityContext` definitions (read-only root filesystem, dropped privileges) and mounted `/tmp` as a writable `emptyDir`. Added HPAs scaling from 3 to 10 replicas, NetworkPolicies restricting ingress only to the ingress namespace, and PodDisruptionBudgets keeping at least 2 active replicas during drains.
 
+## [2026-05-21] - Infrastructure: Independent Parallel Linter Configuration
+- **Task**: Establish a linter rule set for `raw/front_source` that handles its hybrid Angular + React architecture, but keep it isolated in a separate parallel project for clean maintenance.
+- **Action**:
+  - **Linter Project**: Created the parallel directory `raw/album-eslint` as an independent Node project with its own package configuration (`package.json`) and shared flat config rules (`index.js`).
+  - **Modern Flat Config**: Designed standard hybrid flat rules combining `@eslint/js`, `typescript-eslint`, `@angular-eslint` (for TS component logic and HTML accessibility), `eslint-plugin-react`, `eslint-plugin-react-hooks`, and `eslint-config-prettier` to override formatting conflicts.
+  - **Frontend Integration**: Linked the linter project as a local devDependency (`"eslint-config-album": "link:../album-eslint"`) inside `raw/front_source/package.json`, added `type: module` for clean modern ESM parsing, and added the standard `eslint.config.js` wrapper importing the configuration.
+  - **Verification**: Installed dependencies and executed `pnpm run lint` in `raw/front_source`, successfully parsing both React TSX components and Angular templates with zero performance overhead.
+
 
 
