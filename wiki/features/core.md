@@ -38,3 +38,15 @@ Detailed description of the features currently implemented in the Panini World C
 - **Aesthetic**: High-contrast "ink-on-paper" feel using a monochrome palette.
 - **Typography**: Exclusive use of IBM Plex Mono for a technical, ledger-like appearance.
 - **Responsiveness**: Fully optimized for mobile, tablet, and desktop views.
+
+## 8. Fallback Routing (404 Page)
+- **Wildcard Matching**: Catches any undefined URL paths using Angular's wildcard `**` route pattern.
+- **Lazy Loading**: Loaded dynamically only when requested to optimize the application's initial bundle size.
+- **Minimalist Styling**: Follows the monochrome ledger aesthetics with fully responsive custom layout.
+
+## 9. Security & Hardening (Infrastructure)
+- **Rate & Connection Capping**: Caps requests per IP (100 req/15min in Express, 30 req/sec in Nginx) and limits concurrent connections to 20 to prevent DDoS.
+- **Header Hardening**: Employs CSP, X-Frame-Options, HSTS, and X-Content-Type-Options via Helmet and Nginx.
+- **Container Sandbox**: Runs fully unprivileged as non-root users inside Docker containers with a read-only root filesystem.
+- **Dynamic CORS**: Environment-variable-controlled source validation (`ALLOWED_ORIGINS`) with development-friendly local fallbacks.
+- **Orchestration Security**: Restricts access via Kubernetes NetworkPolicies, auto-scales under load via HPAs, and ensures high availability via PodDisruptionBudgets.

@@ -14,7 +14,9 @@ Current status of the project's milestones.
 - [x] **Hierarchical Navigation**: Two-level grouping and collapsible UI.
 - [x] **Filtering System**: Advanced search with accent-insensitivity.
 - [x] **Import/Export**: JSON-based backup system.
-- [/] **Testing Suite**: Strategy defined; initial tests for core components.
+- [x] **Testing Suite**: Comprehensive unit and integration test coverage with Vitest (84 passing tests).
+- [x] **404 Route Fallback**: Dynamic lazy-loaded `NotFoundComponent` page for non-existent routes.
+- [x] **Security & DDoS Hardening**: Multi-layer security implementation spanning Express, Nginx, Docker, Compose, and Kubernetes.
 
 ## Backend (Go)
 - [/] **Architecture Design**: Initial Go/AWS proposal defined in `wiki/back-architecture.md`.

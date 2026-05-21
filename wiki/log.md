@@ -171,12 +171,37 @@ Chronological, append-only record of all operations.
   - Organizes deployment artifacts cleanly, separating them from the application source code.
   - Simplifies management of environment-specific configurations.
 
-## [2026-05-12] - Infrastructure: Docker Portability Fix
-- **Task**: Resolve "mounts denied" errors in Docker Desktop/WSL environments.
+## [2026-05-19] - Infrastructure: Go AWS Lambda Backend Initialization
+- Initialized Go module `album-api` in `raw/back_source`.
+- Implemented core handler logic in `internal/handler/handler.go`, decoupled from transport.
+- Created AWS Lambda entrypoint in `cmd/api/main.go`.
+- Created local development entrypoint in `cmd/local/main.go` using a standard HTTP server.
+- Implemented `Makefile` for ARM64 builds and local execution.
+- Verified local server functionality with `curl` (returning 200 OK).
+- Verified ARM64 build process and creation of `bootstrap.zip`.
+
+## [2026-05-21] - Infrastructure: Backend OpenAPI Specification
+- Created `raw/back_source/api/api-spec.json` defining the OpenAPI 3.0.0 specification for the Go backend.
+- Modeled the root endpoint `GET /` returning the welcome message from the Album API.
+- Relocated specification into a dedicated `api/` directory inside `raw/back_source`.
+- Established a mandate in `raw/back_source/GEMINI.md` requiring all endpoints (developed or planned) to be documented there.
+- Updated `wiki/back-architecture.md` to reference the correct specification file location.
+
+## [2026-05-21] - UI: Fallback Page for Non-Existent Routes
+- **Task**: Prevent blank screen or redirect issues when users type or share incorrect URLs.
 - **Action**: 
-  - Replaced host volume mounts for Nginx load balancers with dedicated `Dockerfile.lb` images.
-  - Updated `docker-compose.ssr.yml` and `docker-compose.ssg.yml` to build the load balancer images instead of mounting local files.
-- **Rationale**: 
-  - Avoids dependencies on host-specific "File Sharing" settings.
-  - Makes the deployment self-contained and more portable across different operating systems.
+  - Created a dedicated `NotFoundComponent` page styled using the project's minimalist monospace and HSL color theme.
+  - Replaced the wildcard `**` route in `app.routes.ts` (which previously redirected silently to `/`) with dynamic lazy-loading of the `NotFoundComponent` page.
+  - Adjusted unit tests in `app.routes.spec.ts` to expect path preservation rather than redirection, and verified that all 84 test suites pass successfully.
+
+## [2026-05-21] - Infrastructure: Security & DDoS Hardening
+- **Task**: Protect the application against DDoS floods, connection starvation, parameter poisoning, and process/signal leaks across both SSG and SSR models.
+- **Action**:
+  - **Express Server Hardening**: Installed `helmet`, `cors`, `compression`, and `express-rate-limit`. Modified `server.ts` to enforce a rate limit of 100 req / 15 mins, trust upstream proxies, bound request payloads to `1kb` to prevent overflows, and safely handle exceptions to avoid stack leaks. Designed dynamic CORS origin filtering bound to the host `ALLOWED_ORIGINS` environment variable.
+  - **Nginx Proxies & Load Balancers**: Extended proxy structures with `set_real_ip_from` modules to extract authentic client IPs behind Cloudflare (`CF-Connecting-IP`). Implemented `limit_req` and `limit_conn` directives to cap connection rates at 30 req/sec and 20 concurrent connects per client.
+  - **Dual-Protocol SSL/TLS**: Configured load balancers to listen on both port `80` (HTTP) and `443` (HTTPS/SSL). Dockerfile builds now auto-generate fallback self-signed certificates so containers run SSL out-of-the-box, simplifying Cloudflare "Full" SSL setups. Added Strict-Transport-Security (HSTS) headers.
+  - **Docker Hardening**: Configured non-root execution (`nginxinc/nginx-unprivileged:alpine` for SSG and Node `node` user for SSR). Installed `tini` as PID 1 inside the SSR container to resolve zombie process leaks and allow prompt shutdown signals. Configured container healthchecks.
+  - **Kubernetes Hardening**: Embedded `securityContext` definitions (read-only root filesystem, dropped privileges) and mounted `/tmp` as a writable `emptyDir`. Added HPAs scaling from 3 to 10 replicas, NetworkPolicies restricting ingress only to the ingress namespace, and PodDisruptionBudgets keeping at least 2 active replicas during drains.
+
+
 
