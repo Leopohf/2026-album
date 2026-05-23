@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: album-app-ssg
+  labels:
+    app: album-app-ssg
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: album-app-ssg
+  template:
+    metadata:
+      labels:
+        app: album-app-ssg
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101 # default UID for 'nginx' in nginxinc/nginx-unprivileged
+        fsGroup: 101
+      containers:
+      - name: app
+        image: album-app-ssg:latest
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 2
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - name: tmp-volume
+          mountPath: /tmp
+      volumes:
+      - name: tmp-volume
+        emptyDir: {}
