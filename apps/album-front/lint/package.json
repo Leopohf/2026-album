@@ -1,12 +1,9 @@
 {
-  "name": "jlhf-lint",
+  "name": "@album/lint",
   "version": "1.0.0",
-  "private": false,
+  "private": true,
   "type": "module",
   "main": "index.js",
-  "peerDependencies": {
-    "eslint": "^9.0.0"
-  },
   "dependencies": {
     "@eslint/js": "^9.20.0",
     "typescript-eslint": "^8.24.0",

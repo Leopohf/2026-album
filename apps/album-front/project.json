@@ -1,0 +1,35 @@
+{
+  "name": "album-front",
+  "projectType": "application",
+  "sourceRoot": "apps/album-front/src",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm ng serve",
+        "cwd": "apps/album-front"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm ng build",
+        "cwd": "apps/album-front"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm vitest run",
+        "cwd": "apps/album-front"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm eslint .",
+        "cwd": "apps/album-front"
+      }
+    }
+  }
+}
