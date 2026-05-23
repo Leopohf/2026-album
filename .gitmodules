@@ -4,6 +4,6 @@
 [submodule "raw/back_source"]
 	path = raw/back_source
 	url = git@github.com:Leopohf/2026-album-track-back.git
-[submodule "raw/album-eslint"]
-	path = raw/album-eslint
-	url = git@github.com:Leopohf/linting-album.git
+[submodule "raw/jlhf-lint"]
+	path = raw/jlhf-lint
+	url = git@github.com:Leopohf/jlhf-lint.git
