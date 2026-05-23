@@ -1,0 +1,28 @@
+{
+  "name": "album-backend",
+  "projectType": "application",
+  "sourceRoot": "apps/album-backend",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make build",
+        "cwd": "apps/album-backend"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make run",
+        "cwd": "apps/album-backend"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make clean",
+        "cwd": "apps/album-backend"
+      }
+    }
+  }
+}
