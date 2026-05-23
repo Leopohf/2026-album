@@ -1,0 +1,20 @@
+{
+  "name": "album-project",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "front:serve": "nx run album-front:serve",
+    "front:build": "nx run album-front:build",
+    "front:test": "nx run album-front:test",
+    "front:lint": "nx run album-front:lint",
+    "back:serve": "nx run album-backend:serve",
+    "back:build": "nx run album-backend:build",
+    "test:all": "nx run-many --target=test",
+    "lint:all": "nx run-many --target=lint"
+  },
+  "devDependencies": {
+    "nx": "^21.0.0"
+  }
+}

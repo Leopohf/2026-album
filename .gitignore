@@ -1,1 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out-tsc/
+
+# Angular
+.angular/
+
+# Testing
+coverage/
+
+# Nx
+.nx/
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+
+# Misc
+.DS_Store
 .antigravitycli/
+
+# Go build artifacts
+bootstrap
+bootstrap.zip
