@@ -117,12 +117,12 @@ Kubernetes resources (`deploy/k8s/ssr/` and `deploy/k8s/ssg/`) enforce productio
 
 To maintain code health across a complex hybrid Angular + React environment without bloating the frontend codebase, a decoupled linter architecture has been established.
 
-### 1. Parallel Linter Package (`raw/album-eslint`)
-Instead of bloating the `raw/front_source` dependencies, all linting tools, engines, and rulesets are defined in a parallel Node project located at `raw/album-eslint`. This ensures:
+### 1. Parallel Linter Package (`raw/jlhf-lint`)
+Instead of bloating the `raw/front_source` dependencies, all linting tools, engines, and rulesets are defined in a parallel Node project located at `raw/jlhf-lint`. This ensures:
 - **Zero Bloat**: The primary frontend project remains lightweight and focused strictly on the application source.
 - **Easy Maintenance**: Rule modifications or package upgrades for TypeScript, Angular, or React linting occur in a single dedicated configuration directory.
 
-### 2. Hybrid Flat Config Rules (`raw/album-eslint/index.js`)
+### 2. Hybrid Flat Config Rules (`raw/jlhf-lint/index.js`)
 The configuration is written using ESLint v9+ **Flat Config**, targeting distinct file patterns for isolated validation:
 - **Base TS/JS Rules**: Standard rules targeting code quality, strict typing compliance, and forbidding unused symbols across all `.js`, `.ts`, and `.tsx` files.
 - **Angular-Specific Rules (`**/*.ts`)**: Evaluates Angular directives and components selectors, Signal inputs/outputs, and lifecycle hooks using `@angular-eslint/eslint-plugin`.
@@ -133,11 +133,11 @@ The configuration is written using ESLint v9+ **Flat Config**, targeting distinc
 ### 3. Connection and Execution
 - The package is linked in `raw/front_source/package.json` using the local pnpm linking mechanism:
   ```json
-  "eslint-config-album": "link:../album-eslint"
+  "jlhf-lint": "link:../jlhf-lint"
   ```
 - A simple wrapper file `raw/front_source/eslint.config.js` imports and default-exports the shared config:
   ```javascript
-  import albumConfig from 'eslint-config-album';
+  import albumConfig from 'jlhf-lint';
   export default albumConfig;
   ```
 - Scripts are exposed in `raw/front_source/package.json` to run validation on demand:

@@ -2,6 +2,16 @@
 
 Chronological, append-only record of all operations.
 
+## [2026-05-23] - Infrastructure: Decoupled Linter Rename and Conflict Resolution
+- **Task**: Fix a `pnpm-lock.yaml` conflict and package resolution crash in `raw/front_source`.
+- **Action**:
+  - Identified that the local linter package was renamed from `album-eslint` to `jlhf-lint` and located in `raw/jlhf-lint`.
+  - Found that `raw/front_source/package.json` was referencing the linter dependency as `"jlhf-lint": "^1.0.0"`, causing `pnpm` to attempt fetching from the remote npm registry and failing with a 404.
+  - Corrected the dependency to `"jlhf-lint": "link:../jlhf-lint"` to properly link the local submodule module.
+  - Ran `pnpm install` to update and stabilize `pnpm-lock.yaml` locally.
+  - Verified stability via successful compilation (`pnpm build`) and lint parsing (`pnpm lint`).
+  - Documented changes across the Obsidian vault (`wiki/front-architecture.md`, `wiki/front-overview.md`).
+
 ## [2026-05-07] - Documentation: Knowledge Base Refinement
 - Restructured `wiki/features/` directory for better organization.
 - Created `wiki/features/core.md`, `wiki/features/status.md`, and `wiki/features/future.md`.
