@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: album-app-ssg-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    
+    # Ingress Controller Rate Limiting (30 RPS per IP, burst 50)
+    nginx.ingress.kubernetes.io/limit-rps: "30"
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: "5"
+    nginx.ingress.kubernetes.io/limit-connections: "20"
+    
+    # Limit Client Request Body size to 1k (for API security)
+    nginx.ingress.kubernetes.io/proxy-body-size: "1k"
+    
+    # Custom Security Headers via configuration snippet
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
+      more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+      more_set_headers "Permissions-Policy: camera=(), microphone=(), geolocation=()";
+spec:
+  # TLS fallback configuration (provided as custom config if not bypassed by Cloudflare)
+  # To enable TLS, uncomment this block and ensure cert-manager or a TLS secret is configured.
+  # tls:
+  # - hosts:
+  #   - album-project.local
+  #   secretName: album-app-ssg-tls
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: album-app-ssg-service
+            port:
+              number: 80

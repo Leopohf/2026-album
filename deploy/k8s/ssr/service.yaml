@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: album-app-ssr-service
+spec:
+  selector:
+    app: album-app-ssr
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000
+  type: ClusterIP
