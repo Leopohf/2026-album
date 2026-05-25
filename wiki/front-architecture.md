@@ -49,21 +49,21 @@ Both production options run 3 replicas of the application behind an Nginx load b
 
 ### Option 1: Docker Containerization (SSR)
 The application is containerized using Docker for scalable and portable deployment with full Server-Side Rendering support.
-- **Strategy**: Multi-stage Docker build using `deploy/ssr/Dockerfile`.
+- **Strategy**: Multi-stage Docker build using `apps/album-front/deploy/ssr/Dockerfile`.
   - **Stage 1 (Builder)**: Uses `node:22-alpine` and `pnpm` to compile the Angular SSR application.
   - **Stage 2 (Runner)**: Uses a minimal `node:22-alpine` runtime to serve the compiled artifacts.
-- **Scalability**: By using `deploy/docker-compose.ssr.yml`, the application can be scaled to multiple replicas (e.g., 3 instances).
+- **Scalability**: By using `apps/album-front/deploy/docker-compose.ssr.yml`, the application can be scaled to multiple replicas (e.g., 3 instances).
 - **Load Balancing**: An Nginx load balancer (`nginx-lb`) is configured to distribute traffic across the SSR instances on port 4000.
 - **Minimization**: The final image contains only the production artifacts (`dist/`) and the Node.js runtime, ensuring a small footprint and faster deployment.
 
 ### Option 3: Nginx + SSG (Scalable & Load Balanced)
 For high-traffic production environments where performance and horizontal scalability are critical, the project provides a dedicated Nginx-based SSG deployment.
-- **Strategy**: Multi-stage Docker build using `deploy/ssg/Dockerfile`.
+- **Strategy**: Multi-stage Docker build using `apps/album-front/deploy/ssg/Dockerfile`.
   - **Stage 1 (Builder)**: Compiles the application and generates static HTML/assets via prerendering.
   - **Stage 2 (Runner)**: Uses `nginx:alpine` to serve the `dist/front/browser` directory.
-- **Scalability**: The application can be scaled horizontally using `deploy/docker-compose.ssg.yml`.
+- **Scalability**: The application can be scaled horizontally using `apps/album-front/deploy/docker-compose.ssg.yml`.
 - **Load Balancing**: A dedicated Nginx load balancer distributes incoming traffic across the SSG replicas.
-- **Optimizations**: The custom `deploy/ssg/default.conf` includes:
+- **Optimizations**: The custom `apps/album-front/deploy/ssg/default.conf` includes:
   - Gzip compression for all text-based assets.
   - SPA routing fallback (`try_files`).
   - Aggressive caching for hashed assets (JS/CSS/Images).
@@ -74,7 +74,7 @@ For high-traffic production environments where performance and horizontal scalab
 To protect the application against DDoS floods, connection starvation, payload injection, and container-level process leaks, a robust multi-layer security architecture has been implemented across both the SSR and SSG deployment patterns.
 
 ### 1. Express Server Protection (SSR)
-When running the SSR engine, the Node/Express server (`src/server.ts`) is fortified using the following middleware and configurations:
+When running the SSR engine, the Node/Express server (`apps/album-front/src/server.ts`) is fortified using the following middleware and configurations:
 - **Helmet**: Enforces secure HTTP headers, including standard Content Security Policies (CSP), frameguard, cross-origin restrictions, and HSTS.
 - **Dynamic CORS Filtering**: Utilizes an environment-variable-backed allowed origin validator (`ALLOWED_ORIGINS`). If no origins are configured, it safely falls back to local development defaults (`localhost:4200`, `localhost:4000`, `localhost:8080`).
 - **HTTP Parameter Limits**: Caps incoming JSON and URL-encoded request payloads at `1kb` to prevent buffer overflow attacks.
@@ -83,7 +83,7 @@ When running the SSR engine, the Node/Express server (`src/server.ts`) is fortif
 - **Exception Boundaries**: Catch-all global error-handling prevents stack trace leakage to the client, logging errors securely on the server side instead.
 
 ### 2. Nginx Load Balancers (SSR & SSG)
-Both SSR (`deploy/ssr/lb.conf`) and SSG (`deploy/ssg/lb.conf`) Nginx configurations are engineered with modern security profiles:
+Both SSR (`apps/album-front/deploy/ssr/lb.conf`) and SSG (`apps/album-front/deploy/ssg/lb.conf`) Nginx configurations are engineered with modern security profiles:
 - **Cloudflare Real IP Restoration**: Maps Cloudflare proxy IPs back to authentic client IPs using the `set_real_ip_from` modules and `CF-Connecting-IP` headers. This prevents rate limit pooling and ensures correct client tracking.
 - **Connection & Request Limiting**:
   - `limit_req`: Caps request frequency at `30 requests/second` with a burst buffer of `10`.
@@ -102,8 +102,8 @@ The containers are built for minimum privilege and secure operations:
 - **Process Supervision (`tini`)**: The SSR Docker container utilizes `tini` as PID 1 to reap zombie processes and correctly forward kernel signals (e.g. `SIGTERM`, `SIGINT`), allowing graceful container shutdown.
 - **Container Healthchecks**: Added standard healthchecks to detect runtime lockups and trigger automatic container replacement by orchestrators.
 
-### 4. Kubernetes Manifests Hardening (`deploy/k8s/`)
-Kubernetes resources (`deploy/k8s/ssr/` and `deploy/k8s/ssg/`) enforce production-grade security:
+### 4. Kubernetes Manifests Hardening (`apps/album-front/deploy/k8s/`)
+Kubernetes resources (`apps/album-front/deploy/k8s/ssr/` and `apps/album-front/deploy/k8s/ssg/`) enforce production-grade security:
 - **Pod Security Contexts**:
   - `runAsNonRoot: true`
   - `runAsUser: 101` (Nginx unprivileged) or `1000` (Node unprivileged).
@@ -117,12 +117,12 @@ Kubernetes resources (`deploy/k8s/ssr/` and `deploy/k8s/ssg/`) enforce productio
 
 To maintain code health across a complex hybrid Angular + React environment without bloating the frontend codebase, a decoupled linter architecture has been established.
 
-### 1. Parallel Linter Package (`raw/jlhf-lint`)
-Instead of bloating the `raw/front_source` dependencies, all linting tools, engines, and rulesets are defined in a parallel Node project located at `raw/jlhf-lint`. This ensures:
-- **Zero Bloat**: The primary frontend project remains lightweight and focused strictly on the application source.
+### 1. Parallel Linter Package (`apps/album-front/lint`)
+Instead of bloating the primary frontend dependencies, all linting tools, engines, and rulesets are defined in a local package located at `apps/album-front/lint`. This ensures:
+- **Zero Bloat**: The primary frontend dependencies remain focused strictly on the application source, while development quality-assurance dependencies live in their own package.
 - **Easy Maintenance**: Rule modifications or package upgrades for TypeScript, Angular, or React linting occur in a single dedicated configuration directory.
 
-### 2. Hybrid Flat Config Rules (`raw/jlhf-lint/index.js`)
+### 2. Hybrid Flat Config Rules (`apps/album-front/lint/index.js`)
 The configuration is written using ESLint v9+ **Flat Config**, targeting distinct file patterns for isolated validation:
 - **Base TS/JS Rules**: Standard rules targeting code quality, strict typing compliance, and forbidding unused symbols across all `.js`, `.ts`, and `.tsx` files.
 - **Angular-Specific Rules (`**/*.ts`)**: Evaluates Angular directives and components selectors, Signal inputs/outputs, and lifecycle hooks using `@angular-eslint/eslint-plugin`.
@@ -131,15 +131,15 @@ The configuration is written using ESLint v9+ **Flat Config**, targeting distinc
 - **Prettier Integration**: Runs `eslint-config-prettier` at the end to automatically disable any formatting rules that might conflict with the existing `.prettierrc`.
 
 ### 3. Connection and Execution
-- The package is linked in `raw/front_source/package.json` using the local pnpm linking mechanism:
+- The package is declared in `pnpm-workspace.yaml` and resolved in `apps/album-front/package.json` using the workspace protocol:
   ```json
-  "jlhf-lint": "link:../jlhf-lint"
+  "@album/lint": "workspace:*"
   ```
-- A simple wrapper file `raw/front_source/eslint.config.js` imports and default-exports the shared config:
+- A simple wrapper file `apps/album-front/eslint.config.js` imports and default-exports the shared config:
   ```javascript
-  import albumConfig from 'jlhf-lint';
+  import albumConfig from '@album/lint';
   export default albumConfig;
   ```
-- Scripts are exposed in `raw/front_source/package.json` to run validation on demand:
-  - `pnpm run lint`: Runs ESLint over all directories inside the frontend scope.
-  - `pnpm run lint:fix`: Automatically applies safe autofixes.
+- Scripts are exposed in the root `package.json` and frontend's `project.json` to run validation via Nx:
+  - `npx nx run album-front:lint`: Runs ESLint over all directories inside the frontend scope.
+  - `npx nx run album-front:lint --fix`: Automatically applies safe autofixes.

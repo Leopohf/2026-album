@@ -7,10 +7,10 @@ The front-end of **2026-album-track** is a modern web application built with Ang
 - **Styling**: Tailwind CSS 4.0
 - **State Management**: Angular Signals
 - **Package Manager**: pnpm
-- **Code Quality**: ESLint v9+ (Decoupled parallel configuration package in `raw/jlhf-lint`)
+- **Code Quality**: ESLint v9+ (Decoupled parallel configuration package `@album/lint` in `apps/album-front/lint/`)
 - **Environment**: Server-Side Rendering (SSR) enabled
 
-## Project Structure
+## Project Structure (under apps/album-front/)
 - `src/app/pages/`: Contains the main views (Home, Album, Section, Profile).
 - `src/app/components/`: Reusable UI components (Stats panel, Filter bar, Sticker card/grid).
 - `src/app/services/`: Business logic and state management (`AlbumService`).

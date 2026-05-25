@@ -6,24 +6,25 @@ To maintain robust code health across the hybrid **Angular 21 + React 19 + TypeS
 
 ## 🏗️ Workspace Architecture
 
-The linting engine resides in a dedicated sibling directory `raw/album-eslint` which is consumed as a local symlinked package inside `raw/front_source`.
+The linting engine resides in a dedicated package `apps/album-front/lint/` (named `@album/lint`) which is consumed as a local workspace package inside the frontend application.
 
 ```
 album-project/
-└── raw/
-    ├── front_source/        # Main Frontend Application
-    │   ├── eslint.config.js # Simple wrapper importing rules
-    │   └── package.json     # Links to album-eslint via local protocol
-    │
-    └── album-eslint/        # Decoupled Linter Package
-        ├── package.json     # Node configurations & package dependencies
-        └── index.js         # Single source of truth ruleset definitions
+├── pnpm-workspace.yaml      # Declares apps/album-front/lint
+└── apps/
+    └── album-front/         # Main Frontend Application
+        ├── eslint.config.js # Wrapper importing `@album/lint` rules
+        ├── package.json     # Declares dependency "@album/lint": "workspace:*"
+        │
+        └── lint/            # Decoupled Linter Package (@album/lint)
+            ├── package.json # Node configurations & package dependencies
+            └── index.js     # Single source of truth ruleset definitions
 ```
 
 This decoupled pattern ensures that:
 - Core development source files are kept clean and lean.
-- Any new frontend projects or packages can instantly share the exact same ruleset by adding the local reference dependency.
-- Upgrading linter plugins, TS parser versions, or adding a new code quality rule is done in a single isolated project.
+- Any other packages within the workspace can instantly share the exact same ruleset by adding the local reference dependency `"@album/lint": "workspace:*"`.
+- Upgrading linter plugins, TS parser versions, or adding a new code quality rule is done in a single isolated folder.
 
 ---
 
@@ -147,16 +148,17 @@ These rules govern the React functional UI components.
 
 ## ⚡ Running and Fixing Code Quality Issues
 
-You can execute validation directly from `/raw/front_source/` using `pnpm`:
+You can execute validation directly from the monorepo root using `pnpm` or `nx`:
 
 ### Run Checks
-Check the entire codebase for linting issues:
+Check the frontend codebase for linting issues:
 ```bash
-pnpm run lint
+pnpm front:lint
+# or: npx nx run album-front:lint
 ```
 
 ### Automatic Autofix
 Safely rewrite files with solvable syntax errors (such as missing semi-colons, improper quoting, or minor formatting issues):
 ```bash
-pnpm run lint:fix
+npx nx run album-front:lint --fix
 ```

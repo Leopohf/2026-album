@@ -2,6 +2,18 @@
 
 Chronological, append-only record of all operations.
 
+## [2026-05-23] - Infrastructure: Nx Monorepo Migration
+- **Task**: Convert the Git Submodules architecture into a single unified Nx monorepo.
+- **Action**:
+  - **Git Subtree Migration**: Removed all three submodules (`raw/front_source`, `raw/back_source`, `raw/jlhf-lint`) from the index and configurations. Re-added their full history using `git subtree add --squash` to `apps/album-front/`, `apps/album-backend/`, and `apps/album-front/lint/`.
+  - **Assets Management**: Moved LFS-tracked `.webp` images from `raw/images/` to `assets/images/` and updated `.gitattributes`. Deleted the obsolete `raw/` directory and `.gitmodules`.
+  - **Scaffolding & Workspaces**: Created monorepo scaffolding at the root: `nx.json`, root `package.json`, `pnpm-workspace.yaml` (declaring `apps/album-front` and `apps/album-front/lint`), `tsconfig.base.json`, and updated `.gitignore`.
+  - **Frontend Configurations**: Renamed the ESLint configuration package to `@album/lint` and set it as `private: true`. Updated frontend's `package.json` to import `@album/lint` using the `workspace:*` protocol. Corrected `eslint.config.js` and extended `tsconfig.json` from the shared `tsconfig.base.json`. Added `apps/album-front/project.json` exposing targets for `serve`, `build`, `test`, and `lint`.
+  - **Backend Configurations**: Added `apps/album-backend/project.json` exposing targets for Go `build`, `serve`, and `clean` via the existing `Makefile`.
+  - **Dependency Assembly**: Successfully ran `pnpm install` at the root, linking `@album/lint` seamlessly into `album-front`.
+  - **Documentation**: Updated `README.md`, `wiki/linter.md`, `wiki/front-overview.md`, `wiki/front-architecture.md`, and deleted `raw/INDEX.md` to reflect the new structure.
+- **Rationale**: Simplifies dependency sharing, streamlines commands under a single runner (`nx`), retains full git history without the administrative complexity of submodules, and houses all linter configurations directly inside the frontend ecosystem.
+
 ## [2026-05-23] - Infrastructure: Decoupled Linter Rename and Conflict Resolution
 - **Task**: Fix a `pnpm-lock.yaml` conflict and package resolution crash in `raw/front_source`.
 - **Action**:
