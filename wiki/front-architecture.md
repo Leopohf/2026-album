@@ -30,22 +30,36 @@ Defined in `src/app/models/sticker.model.ts`:
 - `AlbumStats`: Aggregated statistics (total, owned, missing, progress %).
 - `FilterState`: Defines current search and filter criteria.
 
-## Deployment Commands
-The project includes a `Makefile` in the frontend root to simplify the management of development and production environments.
+## Deployment & Task Orchestration
+To support clean monorepo management and ensure maximum compatibility with CI/CD pipelines, the project employs a **Unified Task-Driven Architecture** that marries a language-native execution layer with an Nx orchestration layer.
 
-### Local Development
-- `make dev`: Starts the standard Angular development server with HMR.
+### The Hybrid Architecture Pattern
+1. **Execution Layer (Local Makefile):** A portable `Makefile` lives in `apps/album-front/` containing pure docker compose and Kubernetes commands. This ensures CI/CD runners or ops pipelines that do not have Node/Nx installed can still build or deploy the application by executing native shell targets inside this folder.
+2. **Orchestration Layer (Nx Targets):** All local Makefile commands are registered in `apps/album-front/project.json` using the `nx:run-commands` executor. This unifies all frontend operations under the single root `nx` runner, allowing developers and root-level CI workflows to execute them from the monorepo root.
 
-### Production Environments (Scalable)
-Both production options run 3 replicas of the application behind an Nginx load balancer by default.
-- `make prod-ssr`: Builds and starts the SSR environment.
-- `make prod-ssg`: Builds and starts the SSG environment.
+### Available Targets & Executions
 
-### Utility Commands
-- `make stop`: Stops all running Docker environments.
-- `make clean`: Removes containers and images created by Docker Compose.
-- `make logs-ssr` / `make logs-ssg`: Follows the logs for the respective environment.
-- `REPLICAS=5 make prod-ssr`: Start SSR with a custom number of replicas.
+| Command Type | Root-Level Monorepo Command (`nx`) | Isolated Direct Directory Command (`make`) | Description |
+| :--- | :--- | :--- | :--- |
+| **Local Dev Server** | `pnpm nx serve album-front` | `make dev` *(runs pnpm start)* | Starts the standard Angular development server with HMR. |
+| **Build Front** | `pnpm nx build album-front` | *Internal Angular CLI* | Compiles the production build of the frontend. |
+| **Test Front** | `pnpm nx test album-front` | *Internal Vitest CLI* | Runs unit tests using Vitest. |
+| **Lint Front** | `pnpm nx lint album-front` | *Internal ESLint CLI* | Validates codebase quality via parallel linter. |
+| **Deploy SSR** | `pnpm nx deploy-ssr album-front` | `make prod-ssr` | Builds and starts the scalable multi-replica SSR environment. |
+| **Deploy SSG** | `pnpm nx deploy-ssg album-front` | `make prod-ssg` | Builds and starts the scalable multi-replica SSG environment. |
+| **Logs SSR** | `pnpm nx logs-ssr album-front` | `make logs-ssr` | Follows and displays real-time logs for SSR replicas. |
+| **Logs SSG** | `pnpm nx logs-ssg album-front` | `make logs-ssg` | Follows and displays real-time logs for SSG replicas. |
+| **K8s Apply SSR** | `pnpm nx k8s-apply-ssr album-front` | `make k8s-apply-ssr` | Deploys the SSR manifests to a active Kubernetes cluster. |
+| **K8s Delete SSR** | `pnpm nx k8s-delete-ssr album-front` | `make k8s-delete-ssr` | Clears all SSR Kubernetes deployments and services. |
+| **K8s Apply SSG** | `pnpm nx k8s-apply-ssg album-front` | `make k8s-apply-ssg` | Deploys the SSG manifests to a active Kubernetes cluster. |
+| **K8s Delete SSG** | `pnpm nx k8s-delete-ssg album-front` | `make k8s-delete-ssg` | Clears all SSG Kubernetes deployments and services. |
+| **Stop Environment** | `pnpm nx stop album-front` | `make stop` | Stops all running Docker Compose environment containers. |
+| **Clean Environment** | `pnpm nx clean album-front` | `make clean` | Tears down Compose containers and prunes cached images. |
+
+*Note: You can pass custom options down to local Makefiles using the `--args` flag, e.g., scaling replicas on deployment:*
+```bash
+pnpm nx deploy-ssr album-front --args="REPLICAS=5"
+```
 
 ### Option 1: Docker Containerization (SSR)
 The application is containerized using Docker for scalable and portable deployment with full Server-Side Rendering support.

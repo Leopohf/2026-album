@@ -30,6 +30,76 @@
         "command": "pnpm eslint .",
         "cwd": "apps/album-front"
       }
+    },
+    "deploy-ssr": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make prod-ssr",
+        "cwd": "apps/album-front"
+      }
+    },
+    "deploy-ssg": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make prod-ssg",
+        "cwd": "apps/album-front"
+      }
+    },
+    "logs-ssr": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make logs-ssr",
+        "cwd": "apps/album-front"
+      }
+    },
+    "logs-ssg": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make logs-ssg",
+        "cwd": "apps/album-front"
+      }
+    },
+    "k8s-apply-ssr": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make k8s-apply-ssr",
+        "cwd": "apps/album-front"
+      }
+    },
+    "k8s-delete-ssr": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make k8s-delete-ssr",
+        "cwd": "apps/album-front"
+      }
+    },
+    "k8s-apply-ssg": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make k8s-apply-ssg",
+        "cwd": "apps/album-front"
+      }
+    },
+    "k8s-delete-ssg": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make k8s-delete-ssg",
+        "cwd": "apps/album-front"
+      }
+    },
+    "stop": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make stop",
+        "cwd": "apps/album-front"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make clean",
+        "cwd": "apps/album-front"
+      }
     }
   }
 }

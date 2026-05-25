@@ -2,6 +2,15 @@
 
 Chronological, append-only record of all operations.
 
+## [2026-05-24] - Infrastructure: Nx Monorepo Unified Targets Alignment
+- **Task**: Align frontend task orchestration with the backend hybrid pattern to ensure unified execution, root-level command orchestration, and CI/CD pipeline friendliness.
+- **Action**:
+  - Registered all Docker Compose, Kubernetes, logs-viewing, and environment-cleaning targets from `apps/album-front/Makefile` as native Nx targets in `apps/album-front/project.json` using `nx:run-commands`.
+  - Standardized target parameters across both frontend and backend configurations.
+  - Tested Nx configuration resolution (`pnpm nx show project album-front`) to verify all targets are successfully indexed.
+  - Documented the architecture updates and root commands inside the central Obsidian vault (`wiki/log.md`, `wiki/front-architecture.md`).
+- **Rationale**: Eradicates fragmented manual command executions (e.g. `cd apps/album-front && make ...`), bridges the operational pattern with `album-backend`, and creates an open framework where standard CI/CD pipelines can run optimized workflows via `nx affected` or directly execute local Makefiles depending on the environment limitations.
+
 ## [2026-05-23] - Infrastructure: Nx Monorepo Migration
 - **Task**: Convert the Git Submodules architecture into a single unified Nx monorepo.
 - **Action**:
