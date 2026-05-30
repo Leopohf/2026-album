@@ -76,7 +76,8 @@ describe('StickerGridReact', () => {
     const specialStickers: Sticker[] = [
       { id: 'C1', name: 'Coke', number: 1, section: 'Coca-Cola', group: 'Coca-Cola', type: 'player', owned: false, duplicates: 0 },
       { id: 'F1', name: 'Intro', number: 1, section: 'FWC', group: 'FWC', type: 'player', owned: false, duplicates: 0 },
-      { id: 'A1', name: 'Player A', number: 1, section: 'A', group: 'A', type: 'player', owned: false, duplicates: 0 }
+      { id: 'A1', name: 'Player A', number: 1, section: 'A', group: 'A', type: 'player', owned: false, duplicates: 0 },
+      { id: 'B1', name: 'Player B', number: 1, section: 'B', group: 'B', type: 'player', owned: false, duplicates: 0 }
     ];
 
     render(
@@ -92,15 +93,30 @@ describe('StickerGridReact', () => {
     );
 
     const groups = screen.getAllByRole('heading', { level: 2 }).map(h => h.textContent);
-    expect(groups).toEqual(['FWC', 'GROUP A', 'Coca-Cola']);
+    expect(groups).toEqual(['FWC', 'GROUP A', 'GROUP B', 'Coca-Cola']);
   });
 
   it('should sort players within teams correctly (#1, #13, then rest)', () => {
     const teamStickers: Sticker[] = [
-      { id: 'T2', name: 'Player 2', number: 2, section: 'TeamName', group: 'A', type: 'player', owned: false, duplicates: 0 },
-      { id: 'T14', name: 'Player 14', number: 14, section: 'TeamName', group: 'A', type: 'player', owned: false, duplicates: 0 },
-      { id: 'T13', name: 'Player 13', number: 13, section: 'TeamName', group: 'A', type: 'player', owned: false, duplicates: 0 },
-      { id: 'T1', name: 'Player 1', number: 1, section: 'TeamName', group: 'A', type: 'player', owned: false, duplicates: 0 }
+      // Team 1: [2, 1] -> forces b.number === 1
+      { id: 'T1_2', name: 'Player 2', number: 2, section: 'Team1', group: 'A', type: 'player', owned: false, duplicates: 0 },
+      { id: 'T1_1', name: 'Player 1', number: 1, section: 'Team1', group: 'A', type: 'player', owned: false, duplicates: 0 },
+
+      // Team 2: [13, 2] -> forces a.number === 13
+      { id: 'T2_13', name: 'Player 13', number: 13, section: 'Team2', group: 'A', type: 'player', owned: false, duplicates: 0 },
+      { id: 'T2_2', name: 'Player 2', number: 2, section: 'Team2', group: 'A', type: 'player', owned: false, duplicates: 0 },
+
+      // Team 3: [2, 13] -> forces b.number === 13
+      { id: 'T3_2', name: 'Player 2', number: 2, section: 'Team3', group: 'A', type: 'player', owned: false, duplicates: 0 },
+      { id: 'T3_13', name: 'Player 13', number: 13, section: 'Team3', group: 'A', type: 'player', owned: false, duplicates: 0 },
+
+      // Team 4: [1, 2] -> forces a.number === 1
+      { id: 'T4_1', name: 'Player 1', number: 1, section: 'Team4', group: 'A', type: 'player', owned: false, duplicates: 0 },
+      { id: 'T4_2', name: 'Player 2', number: 2, section: 'Team4', group: 'A', type: 'player', owned: false, duplicates: 0 },
+
+      // Team 5: [2, 14] -> forces fallthrough
+      { id: 'T5_2', name: 'Player 2', number: 2, section: 'Team5', group: 'A', type: 'player', owned: false, duplicates: 0 },
+      { id: 'T5_14', name: 'Player 14', number: 14, section: 'Team5', group: 'A', type: 'player', owned: false, duplicates: 0 }
     ];
 
     render(
@@ -117,9 +133,9 @@ describe('StickerGridReact', () => {
 
     const names = screen.getAllByRole('heading', { level: 3 })
       .map(h => h.textContent)
-      .filter(t => t !== 'TeamName');
+      .filter(t => t && !t.startsWith('Team'));
       
-    expect(names).toEqual(['Player 1', 'Player 13', 'Player 2', 'Player 14']);
+    expect(names).toEqual(['Player 1', 'Player 2', 'Player 13', 'Player 2', 'Player 13', 'Player 2', 'Player 1', 'Player 2', 'Player 2', 'Player 14']);
   });
 
   it('should render "No stickers found" message when list is empty', () => {

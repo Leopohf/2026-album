@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatsPanelComponent } from './stats-panel.component';
 import { AlbumStats } from '../../models/sticker.model';
+import { provideI18nTesting } from '../../testing/i18n-testing';
 
 describe('StatsPanelComponent', () => {
   let component: StatsPanelComponent;
@@ -16,7 +17,8 @@ describe('StatsPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StatsPanelComponent]
+      imports: [StatsPanelComponent],
+      providers: [...provideI18nTesting()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatsPanelComponent);

@@ -4,6 +4,7 @@ import { AlbumService } from '../../services/album.service';
 import { Router } from '@angular/router';
 import { provideRouter } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { provideI18nTesting } from '../../testing/i18n-testing';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -20,7 +21,8 @@ describe('HomeComponent', () => {
       imports: [HomeComponent, FormsModule],
       providers: [
         { provide: AlbumService, useValue: albumService },
-        provideRouter([])
+        provideRouter([]),
+        ...provideI18nTesting(),
       ]
     }).compileComponents();
 

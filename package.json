@@ -8,6 +8,7 @@
     "front:serve": "nx run album-front:serve",
     "front:build": "nx run album-front:build",
     "front:test": "nx run album-front:test",
+    "front:test:coverage": "nx run album-front:test:coverage",
     "front:lint": "nx run album-front:lint",
     "back:serve": "nx run album-backend:serve",
     "back:build": "nx run album-backend:build",

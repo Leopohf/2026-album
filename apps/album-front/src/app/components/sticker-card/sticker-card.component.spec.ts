@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StickerCardComponent } from './sticker-card.component';
 import { Sticker } from '../../models/sticker.model';
+import { provideI18nTesting } from '../../testing/i18n-testing';
 
 describe('StickerCardComponent', () => {
   let component: StickerCardComponent;
@@ -19,7 +20,8 @@ describe('StickerCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StickerCardComponent]
+      imports: [StickerCardComponent],
+      providers: [...provideI18nTesting()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(StickerCardComponent);

@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { FilterState } from '../../models/sticker.model';
 
+interface FilterBarLabels {
+  searchPlaceholder: string;
+  allSections: string;
+  tabs: {
+    all: string;
+    owned: string;
+    missing: string;
+    duplicates: string;
+  };
+  groups: string;
+  all: string;
+}
+
 interface FilterBarProps {
   sections: string[];
   initialFilters: FilterState;
+  labels?: Partial<FilterBarLabels> & { tabs?: Partial<FilterBarLabels['tabs']> };
   onFilterChange: (filters: FilterState) => void;
   onExpandAll: () => void;
   onCollapseAll: () => void;
@@ -11,16 +25,23 @@ interface FilterBarProps {
   onCollapseGroups: () => void;
 }
 
-const TABS: { label: string; value: FilterState['status'] }[] = [
-  { label: 'ALL', value: 'all' },
-  { label: 'OWNED', value: 'owned' },
-  { label: 'MISSING', value: 'missing' },
-  { label: 'DUPLICATES', value: 'duplicates' }
-];
+const defaultLabels: FilterBarLabels = {
+  searchPlaceholder: 'SEARCH BY ID OR NAME',
+  allSections: 'ALL SECTIONS',
+  tabs: {
+    all: 'ALL',
+    owned: 'OWNED',
+    missing: 'MISSING',
+    duplicates: 'DUPLICATES',
+  },
+  groups: 'GROUPS',
+  all: 'ALL',
+};
 
 export const FilterBarReact: React.FC<FilterBarProps> = ({ 
   sections, 
-  initialFilters, 
+  initialFilters,
+  labels,
   onFilterChange,
   onExpandAll,
   onCollapseAll,
@@ -28,6 +49,27 @@ export const FilterBarReact: React.FC<FilterBarProps> = ({
   onCollapseGroups
 }) => {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
+
+  const resolvedLabels = {
+    ...defaultLabels,
+    ...labels,
+    tabs: {
+      ...defaultLabels.tabs,
+      ...labels?.tabs,
+    },
+  };
+
+  // Sync status filter value when locale changes (tab labels change but the status key stays typed)
+  useEffect(() => {
+    setFilters(initialFilters);
+  }, [initialFilters]);
+
+  const tabs: { label: string; value: FilterState['status'] }[] = [
+    { label: resolvedLabels.tabs.all, value: 'all' },
+    { label: resolvedLabels.tabs.owned, value: 'owned' },
+    { label: resolvedLabels.tabs.missing, value: 'missing' },
+    { label: resolvedLabels.tabs.duplicates, value: 'duplicates' },
+  ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -51,7 +93,7 @@ export const FilterBarReact: React.FC<FilterBarProps> = ({
           name="search"
           value={filters.search}
           onChange={handleInputChange}
-          placeholder="SEARCH BY ID OR NAME"
+          placeholder={resolvedLabels.searchPlaceholder}
           className="flex-1 bg-transparent border border-border p-3 text-sm focus:outline-none focus:border-ink uppercase placeholder:text-muted/50"
         />
         <select 
@@ -60,7 +102,7 @@ export const FilterBarReact: React.FC<FilterBarProps> = ({
           onChange={handleInputChange}
           className="bg-transparent border border-border p-3 text-sm focus:outline-none focus:border-ink uppercase"
         >
-          <option value="">ALL SECTIONS</option>
+          <option value="">{resolvedLabels.allSections}</option>
           {sections.map(section => (
             <option key={section} value={section}>{section.toUpperCase()}</option>
           ))}
@@ -70,7 +112,7 @@ export const FilterBarReact: React.FC<FilterBarProps> = ({
       {/* Status Tabs & Actions */}
       <div className="flex flex-col sm:flex-row items-center border-b border-border gap-4 sm:gap-8">
         <div className="flex w-full sm:w-auto overflow-x-auto no-scrollbar">
-          {TABS.map(tab => (
+          {tabs.map(tab => (
             <button 
               key={tab.value}
               onClick={() => setStatus(tab.value)}
@@ -91,13 +133,13 @@ export const FilterBarReact: React.FC<FilterBarProps> = ({
               onClick={onExpandGroups}
               className="text-[10px] uppercase font-bold tracking-tighter text-muted hover:text-ink transition-colors flex items-center gap-1"
             >
-              <span>[+]</span> GROUPS
+              <span>[+]</span> {resolvedLabels.groups}
             </button>
             <button 
               onClick={onCollapseGroups}
               className="text-[10px] uppercase font-bold tracking-tighter text-muted hover:text-ink transition-colors flex items-center gap-1"
             >
-              <span>[-]</span> GROUPS
+              <span>[-]</span> {resolvedLabels.groups}
             </button>
           </div>
           <div className="flex gap-4">
@@ -105,13 +147,13 @@ export const FilterBarReact: React.FC<FilterBarProps> = ({
               onClick={onExpandAll}
               className="text-[10px] uppercase font-bold tracking-tighter text-muted hover:text-ink transition-colors flex items-center gap-1"
             >
-              <span>[+]</span> ALL
+              <span>[+]</span> {resolvedLabels.all}
             </button>
             <button 
               onClick={onCollapseAll}
               className="text-[10px] uppercase font-bold tracking-tighter text-muted hover:text-ink transition-colors flex items-center gap-1"
             >
-              <span>[-]</span> ALL
+              <span>[-]</span> {resolvedLabels.all}
             </button>
           </div>
         </div>
@@ -119,3 +161,4 @@ export const FilterBarReact: React.FC<FilterBarProps> = ({
     </div>
   );
 };
+

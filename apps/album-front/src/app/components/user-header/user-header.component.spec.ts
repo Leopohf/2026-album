@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserHeaderComponent } from './user-header.component';
 import { AlbumStats } from '../../models/sticker.model';
+import { provideI18nTesting } from '../../testing/i18n-testing';
 
 describe('UserHeaderComponent', () => {
   let component: UserHeaderComponent;
@@ -16,7 +17,8 @@ describe('UserHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserHeaderComponent]
+      imports: [UserHeaderComponent],
+      providers: [...provideI18nTesting()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserHeaderComponent);

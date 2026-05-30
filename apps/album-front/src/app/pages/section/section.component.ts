@@ -2,6 +2,7 @@ import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } 
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AlbumService } from '../../services/album.service';
+import { I18nService } from '../../services/i18n.service';
 import { UserHeaderComponent } from '../../components/user-header/user-header.component';
 import { StickerGridComponent } from '../../components/sticker-grid/sticker-grid.component';
 import { FilterState } from '../../models/sticker.model';
@@ -24,7 +25,7 @@ import { FilterState } from '../../models/sticker.model';
 
       <div class="mb-8 flex items-center justify-between">
         <h2 class="text-2xl font-bold uppercase tracking-tighter">{{ sectionName() }}</h2>
-        <a routerLink="/album" class="text-xs uppercase hover:underline">Back to album</a>
+        <a routerLink="/album" class="text-xs uppercase hover:underline">{{ i18n.t().nav.backToAlbum }}</a>
       </div>
 
       <app-sticker-grid 
@@ -38,6 +39,7 @@ import { FilterState } from '../../models/sticker.model';
 })
 export class SectionComponent implements OnInit {
   albumService = inject(AlbumService);
+  readonly i18n = inject(I18nService);
   route = inject(ActivatedRoute);
   
   sectionName = signal<string>('');

@@ -2,25 +2,62 @@ import React, { useMemo } from 'react';
 import { Sticker, TournamentGroup, TeamGroup } from '../../models/sticker.model';
 import { StickerCardReact } from '../sticker-card/StickerCardReact';
 
+interface StickerStatusLabels {
+  missing: string;
+  owned: string;
+  duplicate: string;
+}
+
+interface StickerGridLabels {
+  noResults: string;
+  group: string;
+  expand: string;
+  collapse: string;
+  statusLabels: StickerStatusLabels;
+}
+
 interface StickerGridProps {
   stickers: Sticker[];
   collapsedSections: Set<string>;
   collapsedGroups: Set<string>;
+  labels?: Partial<StickerGridLabels> & { statusLabels?: Partial<StickerStatusLabels> };
   onToggleSection: (section: string) => void;
   onToggleGroup: (group: string) => void;
   onToggled: (id: string) => void;
   onRepeatChanged: (id: string, delta: number) => void;
 }
 
+const defaultLabels: StickerGridLabels = {
+  noResults: 'No stickers found',
+  group: 'GROUP',
+  expand: '[+] EXPAND',
+  collapse: '[-] COLLAPSE',
+  statusLabels: {
+    missing: 'Missing',
+    owned: 'Owned',
+    duplicate: 'Duplicate',
+  },
+};
+
 export const StickerGridReact: React.FC<StickerGridProps> = ({ 
   stickers, 
   collapsedSections,
   collapsedGroups,
+  labels,
   onToggleSection,
   onToggleGroup,
   onToggled, 
   onRepeatChanged 
 }) => {
+  const resolvedLabels = {
+    ...defaultLabels,
+    ...labels,
+    statusLabels: {
+      ...defaultLabels.statusLabels,
+      ...labels?.statusLabels,
+    },
+  };
+
   const groupedData = useMemo(() => {
     const tournamentGroupsMap = new Map<string, Map<string, Sticker[]>>();
     
@@ -78,7 +115,7 @@ export const StickerGridReact: React.FC<StickerGridProps> = ({
   if (stickers.length === 0) {
     return (
       <div className="py-20 text-center font-mono text-muted uppercase text-sm border border-dashed border-border">
-        No stickers found
+        {resolvedLabels.noResults}
       </div>
     );
   }
@@ -87,7 +124,7 @@ export const StickerGridReact: React.FC<StickerGridProps> = ({
     <div className="space-y-16 pb-20">
       {groupedData.map((group) => {
         const isGroupCollapsed = collapsedGroups.has(group.name);
-        const groupLabel = group.name.length === 1 ? `GROUP ${group.name}` : group.name;
+
 
         return (
           <div key={group.name} className="space-y-8">
@@ -99,10 +136,10 @@ export const StickerGridReact: React.FC<StickerGridProps> = ({
               <button 
                 className="text-xs font-mono text-ink border-2 border-ink px-3 py-1 group-hover/group-header:bg-ink group-hover/group-header:text-bg transition-all min-w-[120px] text-center font-bold"
               >
-                {isGroupCollapsed ? '[+] EXPAND' : '[-] COLLAPSE'}
+                {isGroupCollapsed ? resolvedLabels.expand : resolvedLabels.collapse}
               </button>
               <h2 className="font-mono text-lg uppercase tracking-[0.3em] text-ink whitespace-nowrap font-black">
-                {groupLabel}
+                {group.name.length === 1 ? `${resolvedLabels.group} ${group.name}` : group.name}
               </h2>
               <div className="h-[2px] w-full bg-ink/10 group-hover/group-header:bg-ink/30 transition-colors"></div>
             </div>
@@ -126,7 +163,7 @@ export const StickerGridReact: React.FC<StickerGridProps> = ({
                             <button 
                               className="text-[10px] font-mono text-muted border border-border/50 px-2 py-0.5 group-hover/team-header:border-ink group-hover/team-header:text-ink transition-all min-w-[90px] text-center"
                             >
-                              {isTeamCollapsed ? '[+] EXPAND' : '[-] COLLAPSE'}
+                              {isTeamCollapsed ? resolvedLabels.expand : resolvedLabels.collapse}
                             </button>
                             <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted whitespace-nowrap group-hover/team-header:text-ink transition-colors">
                               {team.name}
@@ -143,6 +180,7 @@ export const StickerGridReact: React.FC<StickerGridProps> = ({
                                 <StickerCardReact 
                                   key={sticker.id}
                                   sticker={sticker}
+                                  statusLabels={resolvedLabels.statusLabels}
                                   onToggle={onToggled}
                                   onUpdateDuplicates={(id, delta) => {
                                     const newQuantity = Math.max(0, sticker.duplicates + delta);

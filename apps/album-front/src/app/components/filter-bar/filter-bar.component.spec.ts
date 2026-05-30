@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FilterBarComponent } from './filter-bar.component';
 import { FilterState } from '../../models/sticker.model';
 import { AlbumService } from '../../services/album.service';
+import { provideI18nTesting } from '../../testing/i18n-testing';
 
 describe('FilterBarComponent', () => {
   let component: FilterBarComponent;
@@ -19,7 +20,8 @@ describe('FilterBarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FilterBarComponent],
       providers: [
-        { provide: AlbumService, useValue: albumService }
+        { provide: AlbumService, useValue: albumService },
+        ...provideI18nTesting()
       ]
     }).compileComponents();
 

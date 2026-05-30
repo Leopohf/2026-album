@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StickerGridComponent } from './sticker-grid.component';
 import { Sticker } from '../../models/sticker.model';
 import { AlbumService } from '../../services/album.service';
+import { provideI18nTesting } from '../../testing/i18n-testing';
 
 describe('StickerGridComponent', () => {
   let component: StickerGridComponent;
@@ -25,7 +26,8 @@ describe('StickerGridComponent', () => {
     await TestBed.configureTestingModule({
       imports: [StickerGridComponent],
       providers: [
-        { provide: AlbumService, useValue: albumService }
+        { provide: AlbumService, useValue: albumService },
+        ...provideI18nTesting()
       ]
     }).compileComponents();
 

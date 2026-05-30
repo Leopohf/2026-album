@@ -1,23 +1,39 @@
 import React from 'react';
 import { Sticker } from '../../models/sticker.model';
 
+interface StickerStatusLabels {
+  missing: string;
+  owned: string;
+  duplicate: string;
+}
+
 interface StickerCardProps {
   sticker: Sticker;
+  statusLabels?: Partial<StickerStatusLabels>;
   onToggle: (id: string) => void;
   onUpdateDuplicates: (id: string, delta: number) => void;
 }
 
+const defaultStatusLabels: StickerStatusLabels = {
+  missing: 'Missing',
+  owned: 'Owned',
+  duplicate: 'Duplicate',
+};
+
 export const StickerCardReact: React.FC<StickerCardProps> = ({ 
   sticker, 
+  statusLabels,
   onToggle, 
   onUpdateDuplicates 
 }) => {
   const isOwned = sticker.owned;
   const hasDuplicates = sticker.duplicates > 0;
 
+  const resolvedStatusLabels = { ...defaultStatusLabels, ...statusLabels };
+
   const statusLabel = !isOwned 
-    ? 'Missing' 
-    : (hasDuplicates ? 'Duplicate' : 'Owned');
+    ? resolvedStatusLabels.missing
+    : (hasDuplicates ? resolvedStatusLabels.duplicate : resolvedStatusLabels.owned);
 
   return (
     <div 
@@ -74,3 +90,4 @@ export const StickerCardReact: React.FC<StickerCardProps> = ({
     </div>
   );
 };
+

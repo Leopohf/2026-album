@@ -3,6 +3,8 @@ import { ProfileComponent } from './profile.component';
 import { AlbumService } from '../../services/album.service';
 import { FormsModule } from '@angular/forms';
 import { provideRouter } from '@angular/router';
+import { provideI18nTesting } from '../../testing/i18n-testing';
+import enUS from '../../i18n/en-US';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -26,7 +28,8 @@ describe('ProfileComponent', () => {
       imports: [ProfileComponent, FormsModule],
       providers: [
         { provide: AlbumService, useValue: albumService },
-        provideRouter([])
+        provideRouter([]),
+        ...provideI18nTesting()
       ]
     }).compileComponents();
 
@@ -74,6 +77,6 @@ describe('ProfileComponent', () => {
 
     expect(textarea.select).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledWith('copy');
-    expect(window.alert).toHaveBeenCalledWith('Copied to clipboard!');
+    expect(window.alert).toHaveBeenCalledWith(enUS.profile.copiedAlert);
   });
 });

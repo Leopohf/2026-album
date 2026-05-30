@@ -4,6 +4,7 @@ import { AlbumService } from '../../services/album.service';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { provideRouter } from '@angular/router';
+import { provideI18nTesting } from '../../testing/i18n-testing';
 
 describe('SectionComponent', () => {
   let component: SectionComponent;
@@ -28,6 +29,7 @@ describe('SectionComponent', () => {
       providers: [
         { provide: AlbumService, useValue: albumService },
         provideRouter([]),
+        ...provideI18nTesting(),
         {
           provide: ActivatedRoute,
           useValue: {

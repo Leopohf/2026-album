@@ -24,6 +24,13 @@
         "cwd": "apps/album-front"
       }
     },
+    "test:coverage": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm vitest run --coverage",
+        "cwd": "apps/album-front"
+      }
+    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

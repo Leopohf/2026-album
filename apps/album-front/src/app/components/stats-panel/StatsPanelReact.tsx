@@ -1,11 +1,27 @@
 import React from 'react';
 import { AlbumStats } from '../../models/sticker.model';
 
-interface StatsPanelProps {
-  stats: AlbumStats;
+interface StatsPanelLabels {
+  total: string;
+  owned: string;
+  missing: string;
+  duplicates: string;
 }
 
-export const StatsPanelReact: React.FC<StatsPanelProps> = ({ stats }) => {
+interface StatsPanelProps {
+  stats: AlbumStats;
+  labels?: Partial<StatsPanelLabels>;
+}
+
+const defaultLabels: StatsPanelLabels = {
+  total: 'Total',
+  owned: 'Owned',
+  missing: 'Missing',
+  duplicates: 'Duplicates',
+};
+
+export const StatsPanelReact: React.FC<StatsPanelProps> = ({ stats, labels }) => {
+  const resolvedLabels = { ...defaultLabels, ...labels };
   return (
     <div className="mb-8 font-mono">
       {/* Progress Bar */}
@@ -19,22 +35,23 @@ export const StatsPanelReact: React.FC<StatsPanelProps> = ({ stats }) => {
       {/* Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="border border-border p-4">
-          <p className="text-[10px] text-muted uppercase tracking-widest mb-1">Total</p>
+          <p className="text-[10px] text-muted uppercase tracking-widest mb-1">{resolvedLabels.total}</p>
           <p className="text-2xl font-bold leading-none">{stats.total}</p>
         </div>
         <div className="border border-border p-4">
-          <p className="text-[10px] text-muted uppercase tracking-widest mb-1">Owned</p>
+          <p className="text-[10px] text-muted uppercase tracking-widest mb-1">{resolvedLabels.owned}</p>
           <p className="text-2xl font-bold leading-none text-success">{stats.owned}</p>
         </div>
         <div className="border border-border p-4">
-          <p className="text-[10px] text-muted uppercase tracking-widest mb-1">Missing</p>
+          <p className="text-[10px] text-muted uppercase tracking-widest mb-1">{resolvedLabels.missing}</p>
           <p className="text-2xl font-bold leading-none">{stats.missing}</p>
         </div>
         <div className="border border-border p-4">
-          <p className="text-[10px] text-muted uppercase tracking-widest mb-1">Duplicates</p>
+          <p className="text-[10px] text-muted uppercase tracking-widest mb-1">{resolvedLabels.duplicates}</p>
           <p className="text-2xl font-bold leading-none">{stats.duplicates}</p>
         </div>
       </div>
     </div>
   );
 };
+
