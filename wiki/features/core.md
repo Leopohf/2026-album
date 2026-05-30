@@ -50,3 +50,9 @@ Detailed description of the features currently implemented in the Panini World C
 - **Container Sandbox**: Runs fully unprivileged as non-root users inside Docker containers with a read-only root filesystem.
 - **Dynamic CORS**: Environment-variable-controlled source validation (`ALLOWED_ORIGINS`) with development-friendly local fallbacks.
 - **Orchestration Security**: Restricts access via Kubernetes NetworkPolicies, auto-scales under load via HPAs, and ensures high availability via PodDisruptionBudgets.
+
+## 10. Internationalization (i18n)
+- **Bilingual Support**: Full support for English (`en-US`) and Spanish (`es-CO`).
+- **Seamless Toggling**: Instant language switching without page reloads, managed seamlessly by Angular Signals propagating down to React props.
+- **Persistent Choice**: Remembers user language preference via `localStorage` and falls back to browser detection.
+- **SSR Compatible**: Statically analyzable translation chunks generated correctly during Vite Server-Side Rendering.

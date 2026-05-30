@@ -2,6 +2,17 @@
 
 Chronological, append-only record of all operations.
 
+## [2026-05-30] - Architecture: Internalization (i18n) Implementation & SSR Fixes
+- **Task**: Implement bilingual support (English and Spanish) across the entire application while maintaining compatibility with the Angular/React hybrid architecture, Server-Side Rendering (SSR), and Unit Testing.
+- **Action**:
+  - Developed a bespoke, lightweight `I18nService` using Angular Signals to manage translation maps without heavy third-party dependencies like `ngx-translate`.
+  - Created type-safe translation dictionaries (`en-US` and `es-CO`) utilizing full TypeScript autocompletion and structural parity checks in unit tests.
+  - Injected `I18nService` into Angular Host components and propagated the localized strings down to pure React components as standard props, ensuring the React layer remains stateless and decoupled from the i18n context.
+  - Built a `<LangSwitcher>` React component for runtime locale toggling, with preferences persisted in `localStorage`.
+  - Resolved SSR hydration crashes by replacing dynamic string interpolation (`import(locale)`) with statically analyzable record maps, allowing Vite's SSR bundler to correctly determine output chunks.
+  - Standardized testing by injecting a synchronous `provideI18nTesting()` module to seed translations before component instantiation, fixing all 84 test suites.
+- **Rationale**: Elevates application accessibility across target audiences while proving the robust nature of the generic Angular-to-React propagation model. Custom signal-based translation scales gracefully without inflating the bundle payload.
+
 ## [2026-05-24] - Infrastructure: Nx Monorepo Unified Targets Alignment
 - **Task**: Align frontend task orchestration with the backend hybrid pattern to ensure unified execution, root-level command orchestration, and CI/CD pipeline friendliness.
 - **Action**:
